@@ -140,6 +140,59 @@ Store SCI results per commit to detect regressions:
 }
 ```
 
+## PHP Projects
+
+**Recommended**: use [sci-profiler-php](https://github.com/fullo/sci-profiler-php) — a
+zero-code-changes profiler that hooks into PHP via `auto_prepend_file`. Works
+with Laravel, Symfony, WordPress, Drupal, and vanilla PHP.
+
+Quick install:
+
+```bash
+git clone https://github.com/fullo/sci-profiler-php.git /opt/sci-profiler-php
+```
+
+Add to `php.ini`:
+
+```ini
+auto_prepend_file = /opt/sci-profiler-php/src/bootstrap.php
+```
+
+No application code changes needed. The profiler intercepts requests
+automatically and measures SCI per request.
+
+Reporters:
+- **JSON Lines** — machine-readable, one JSON object per request
+- **Log** — append to a log file for later analysis
+- **HTML Dashboard** — visual summary of SCI per endpoint
+
+## Advanced: GSF Impact Framework
+
+For complex multi-component systems requiring standardized measurement across
+heterogeneous stacks, use the [GSF Impact Framework (IF)](https://github.com/Green-Software-Foundation/if).
+
+- Plugin-based pipeline configured via YAML manifests
+- Supports custom plugins for any measurement source
+- API server + Helm chart available for Kubernetes deployments
+- Best suited for large organizations needing consistent SCI measurement
+  across diverse services (different languages, runtimes, cloud providers)
+
+Use IF when: the project spans multiple teams, languages, or infrastructure
+providers and needs a unified measurement layer.
+
+## Carbon-Aware Scheduling
+
+The [Carbon Aware SDK](https://github.com/Green-Software-Foundation/carbon-aware-sdk)
+enables running workloads when and where grid energy is greener.
+
+- WebApi + CLI for querying carbon emissions data by region and time
+- Supports WattTime and Electricity Maps as data sources
+- Use cases: schedule batch jobs during low-carbon periods, route traffic
+  to greener regions, defer non-urgent computation
+
+Integration: call the SDK API before scheduling batch work or cron jobs to
+pick the lowest-carbon time window within your SLO.
+
 ## Limitations
 
 1. Wall time includes message passing and scheduling overhead
@@ -155,3 +208,6 @@ Store SCI results per commit to detect regressions:
 - [SCI Profiler (TypeScript)](https://github.com/fullo/sci-profiler)
 - [Cloud Carbon Footprint](https://www.cloudcarbonfootprint.org/)
 - [Electricity Maps](https://app.electricitymaps.com/)
+- [SCI Profiler PHP](https://github.com/fullo/sci-profiler-php)
+- [GSF Impact Framework](https://github.com/Green-Software-Foundation/if)
+- [Carbon Aware SDK](https://github.com/Green-Software-Foundation/carbon-aware-sdk)

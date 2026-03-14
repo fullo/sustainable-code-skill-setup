@@ -11,7 +11,7 @@ description: >-
 license: MIT
 metadata:
   author: fullo
-  version: "1.0"
+  version: "2.0"
 ---
 
 # Sustainable Project Setup
@@ -42,6 +42,8 @@ Sustainability Setup Progress:
 - [ ] Phase 8: Establish baselines and targets
 - [ ] Phase 9: Create sustainability-aware CLAUDE.md
 ```
+
+See [references/phase-output-examples.md](references/phase-output-examples.md) for expected deliverable formats for each phase.
 
 ## Phase 1 — Explore
 
@@ -75,9 +77,11 @@ Deliverables:
 2. Estimate relative energy cost (high/medium/low) per major feature
 3. Recommend a measurement approach:
    - **Any JS/TS project** (browser, Node.js, Deno, Bun): integrate the [SCI Profiler](https://github.com/fullo/sci-profiler) — zero-dependency, framework-agnostic TypeScript library that uses `performance.now()` to compute SCI per operation. Recommended for all projects where `performance.now()` is available.
+   - **PHP projects** (Laravel, Symfony, WordPress, Drupal, vanilla PHP): integrate [sci-profiler-php](https://github.com/fullo/sci-profiler-php) — zero-code-changes profiler using `auto_prepend_file`. See [references/sci-guide.md](references/sci-guide.md) for setup.
    - **Other server-side** (Python, Go, Java, etc.): per-request CPU time tracking or [Cloud Carbon Footprint](https://www.cloudcarbonfootprint.org/)
    - **CLI tools**: wall-clock benchmarks with `hyperfine` or equivalent
 4. If possible, create an initial SCI benchmark for the top 5 operations
+5. **Web projects (page-level estimation)**: use the Sustainable Web Design Model v4 for quick top-down estimation of emissions per page view based on page weight. See [references/swd-model.md](references/swd-model.md). Use alongside SCI for a complete picture (SWD for page-level, SCI for operation-level).
 
 See [references/sci-guide.md](references/sci-guide.md) for the full SCI methodology, constants, and implementation patterns.
 
@@ -96,6 +100,10 @@ Deliverables:
 2. For each `gap`: propose a concrete action with effort estimate (trivial/small/medium/large)
 3. Identify the 10 highest-impact improvements
 4. Create `wsg-report/wsg-compliance.json` using the template structure
+
+Cross-reference findings with the [cnumr 115 best practices](https://github.com/cnumr/best-practices) catalog (5th edition) — the most comprehensive eco-design web reference.
+
+Use [Creedengo rules](references/creedengo-rules.md) as automated code-level checks for energy-wasteful patterns. If SonarQube is available, install the Creedengo plugin. Otherwise, use the manual checklist from the reference as a code review guide.
 
 See [references/wsg-checklist.md](references/wsg-checklist.md) for the complete 80-guideline checklist and JSON template.
 
@@ -117,6 +125,10 @@ Deliverables:
 2. Create `lighthouserc.json` targeting 3-5 representative pages
 3. Add `npm run audit:a11y` (or equivalent) script
 4. List top 10 accessibility issues by severity
+
+Additionally, check hosting sustainability:
+- Look for a [carbon.txt](https://carbontxt.org/) file declaring the hosting provider's green credentials
+- Verify the hosting provider against the [Green Web Foundation](https://www.thegreenwebfoundation.org/) database
 
 See [references/accessibility-setup.md](references/accessibility-setup.md) for Lighthouse CI configuration examples.
 
@@ -140,6 +152,8 @@ Deliverables:
 2. Identify the 5 heaviest dependencies — propose lighter alternatives
 3. Recommend tree-shaking, code splitting, and lazy loading improvements
 4. If web fonts are used, evaluate switching to system font stack (zero network cost)
+5. Reference the [Green Software Patterns](references/green-patterns.md) catalog for optimization recommendations mapped to each audit phase
+6. For cloud/K8s deployments: consider [Kepler](https://github.com/sustainable-computing-io/kepler) for container-level energy monitoring using eBPF and hardware counters
 
 ## Phase 6 — Testing & Quality
 
@@ -157,6 +171,8 @@ Deliverables:
 3. Write tests for the 5 most critical operations
 4. Add `test`, `test:watch`, `test:coverage` scripts
 5. Establish rule: every new feature gets a co-located test file
+6. Set up [eco-ci energy estimation](references/eco-ci-setup.md) to measure CI pipeline carbon per run
+7. Add `audit:ci-energy` script to report CI energy consumption and track it over time
 
 ## Phase 7 — Prioritize
 
@@ -222,3 +238,4 @@ Apply these throughout:
 6. **Accessibility is sustainability** — inclusive software serves more people without forcing device upgrades
 7. **Automate the checks** — if it's not in CI, it will regress
 8. **Track over time** — one measurement is a data point, a time series is a strategy
+9. **Design frugally** — apply Frugal UX principles: deliver more value with fewer resources (inspired by the Climate Product Leaders Playbook and Jugaad approach)

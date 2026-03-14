@@ -1,5 +1,11 @@
 # Sustainable Project Setup — Agent Skill
 
+[![Skill Version](https://img.shields.io/badge/skill-v2.0-blue)](SKILL.md)
+[![MCP Tools](https://img.shields.io/badge/MCP_tools-5-green)](mcp-plugin/)
+[![Tests](https://img.shields.io/badge/tests-38_passing-brightgreen)](mcp-plugin/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Agent Skills](https://img.shields.io/badge/format-agentskills.io-purple)](https://agentskills.io/)
+
 An [Agent Skill](https://agentskills.io/) that audits any software project for environmental sustainability, accessibility, and quality, then implements measurable improvements.
 
 ## What it does
@@ -22,9 +28,14 @@ When activated, the skill guides your AI agent through a 9-phase workflow:
 |------|----------------|
 | Carbon measurement | [SCI (Software Carbon Intensity)](https://sci-guide.greensoftware.foundation/) |
 | SCI profiling (JS/TS) | [SCI Profiler](https://github.com/fullo/sci-profiler) — zero-dependency TypeScript library |
+| SCI profiling (PHP) | [SCI Profiler PHP](https://github.com/fullo/sci-profiler-php) — zero-code-changes, framework-agnostic |
+| Page emissions | [Sustainable Web Design (SWD) v4](https://sustainablewebdesign.org/estimating-digital-emissions/) model |
 | Web sustainability | [W3C WSG 1.0](https://www.w3.org/TR/web-sustainability-guidelines/) (80 guidelines) |
 | Accessibility | [WCAG 2.1 AA](https://www.w3.org/TR/WCAG21/) via [Lighthouse CI](https://github.com/GoogleChrome/lighthouse-ci) |
 | Performance | Lighthouse performance scores, bundle budgets |
+| Green patterns | [Green Software Foundation](https://patterns.greensoftware.foundation/) patterns catalog |
+| Static analysis | [Creedengo](https://github.com/green-code-initiative/creedengo-rules-specifications) green code rules |
+| CI energy tracking | [eco-ci-energy-estimation](https://github.com/green-coding-solutions/eco-ci-energy-estimation) for pipeline measurement |
 | Cloud carbon | [Cloud Carbon Footprint](https://www.cloudcarbonfootprint.org/) |
 
 ## Installation
@@ -50,15 +61,49 @@ Place the skill in your home directory to make it available across all projects:
 git clone https://github.com/fullo/sustainable-code-skill-setup.git ~/.claude/skills/sustainable-project-setup
 ```
 
+## MCP Plugin
+
+The `mcp-plugin/` directory provides a standalone MCP server with five sustainability tools that any MCP-compatible agent can use directly:
+
+| Tool | Description |
+|------|-------------|
+| `sci_calculate` | Compute SCI carbon intensity per functional unit (operation, request, etc.) |
+| `swd_estimate` | Estimate page-level CO2 emissions using the Sustainable Web Design v4 model |
+| `check_green_hosting` | Check if a domain uses green hosting via The Green Web Foundation API |
+| `grid_carbon_intensity` | Look up grid carbon intensity (gCO2eq/kWh) by country code |
+| `wsg_compliance_score` | Score a WSG compliance JSON file and report gaps by category |
+
+Install and run:
+
+```bash
+cd mcp-plugin
+npm install
+npm run build
+npm start
+```
+
 ## File structure
 
 ```
 sustainable-project-setup/
-  SKILL.md                              # Main skill (224 lines)
+  SKILL.md                              # Main skill (v2.0, 9 phases)
+  CLAUDE.md                             # Project guidelines for AI agents
+  CONTRIBUTING.md                       # How to contribute
   references/
-    sci-guide.md                        # SCI formula, constants, implementation patterns
+    sci-guide.md                        # SCI formula, constants, JS/TS/PHP implementation
     wsg-checklist.md                    # Complete 80-guideline WSG 1.0 checklist + JSON template
     accessibility-setup.md              # Lighthouse CI configuration and manual checks
+    green-patterns.md                   # Green Software Foundation patterns catalog
+    creedengo-rules.md                  # Creedengo static analysis rules for green code
+    swd-model.md                        # Sustainable Web Design Model v4 for page emissions
+    eco-ci-setup.md                     # CI pipeline energy measurement with eco-ci
+    phase-output-examples.md            # Expected output format for each phase
+  mcp-plugin/
+    src/tools/                          # Five MCP tool implementations
+    src/tools/__tests__/                # Test suite (38 tests)
+    src/lib/                            # Shared constants and types
+    vitest.config.ts                    # Test configuration
+    package.json                        # Dependencies and scripts
 ```
 
 The skill uses **progressive disclosure**: agents load `SKILL.md` first (~100 tokens for metadata), the full body on activation, and reference files only when needed during specific phases.
@@ -81,6 +126,12 @@ The skill activates when a user mentions:
 - Green code, carbon footprint, sustainability
 - SCI, WSG, or accessibility auditing
 - Eco-friendly development practices
+
+## Development
+
+See [CLAUDE.md](CLAUDE.md) for build/test commands, project structure details, and editing guidelines.
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for how to contribute, commit conventions, and data update procedures.
 
 ## License
 
