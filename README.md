@@ -13,6 +13,7 @@ A collection of [Agent Skills](https://agentskills.io/) and MCP tools that audit
 | Command | What it does |
 |---------|-------------|
 | `/gc-setup` | Full 9-phase sustainability audit (SCI, WSG, a11y, performance, testing, baselines) |
+| `/gc-dev` | Daily development companion — green check before commit, feature planning, PR review |
 | `/gc-measure-sci` | Measure SCI carbon intensity for a specific operation or endpoint |
 | `/gc-check-sustainability` | Quick sustainability check (WSG, green hosting, code patterns) |
 | `/gc-estimate-emissions` | Estimate CO2 emissions per page view or across a sitemap |
@@ -51,20 +52,25 @@ When activated, the skill guides your AI agent through a 9-phase workflow:
 
 ### Step 1 — Install the skills
 
-Copy the `skills-agent/` contents into your project's `.claude/skills/` directory:
+Clone the repository and copy the skills into your project:
 
 ```bash
-git clone https://github.com/fullo/sustainable-code-skill-setup.git /tmp/gc-skills
-cp -r /tmp/gc-skills/skills-agent/* .claude/skills/
-rm -rf /tmp/gc-skills
+git clone https://github.com/fullo/sustainable-code-skill-setup.git ~/.gc-tools
+cp -r ~/.gc-tools/skills-agent/* .claude/skills/
 ```
 
-For a global installation available across all projects:
+Or install globally (available across all projects):
 
 ```bash
-git clone https://github.com/fullo/sustainable-code-skill-setup.git /tmp/gc-skills
-cp -r /tmp/gc-skills/skills-agent/* ~/.claude/skills/
-rm -rf /tmp/gc-skills
+git clone https://github.com/fullo/sustainable-code-skill-setup.git ~/.gc-tools
+cp -r ~/.gc-tools/skills-agent/* ~/.claude/skills/
+```
+
+To update later:
+
+```bash
+cd ~/.gc-tools && git pull
+cp -r skills-agent/* ~/.claude/skills/        # or .claude/skills/ for project-local
 ```
 
 Your `.claude/skills/` directory will contain:
@@ -75,6 +81,8 @@ Your `.claude/skills/` directory will contain:
     SKILL.md
     references/                         # 8 reference files loaded on-demand
   gc-measure-sci/                       # Quick SCI measurement
+    SKILL.md
+  gc-dev/                               # Daily dev companion
     SKILL.md
   gc-check-sustainability/              # Quick sustainability check
     SKILL.md
@@ -87,7 +95,9 @@ Your `.claude/skills/` directory will contain:
 The MCP plugin gives your agent access to 8 sustainability measurement tools. This enhances the skills with real-time calculations but is not required — all skills include manual fallback instructions.
 
 ```bash
-npm install -g sustainable-code-mcp
+git clone https://github.com/fullo/sustainable-code-skill-setup.git ~/.gc-tools
+cd ~/.gc-tools/mcp-plugin
+npm install && npm run build
 ```
 
 Then add to your `.claude/settings.json`:
@@ -96,29 +106,18 @@ Then add to your `.claude/settings.json`:
 {
   "mcpServers": {
     "sustainable-code": {
-      "command": "sustainable-code-mcp"
-    }
-  }
-}
-```
-
-Or run from source:
-
-```bash
-git clone https://github.com/fullo/sustainable-code-skill-setup.git
-cd sustainable-code-skill-setup/mcp-plugin
-npm install && npm run build
-```
-
-```json
-{
-  "mcpServers": {
-    "sustainable-code": {
       "command": "node",
-      "args": ["/absolute/path/to/mcp-plugin/dist/index.js"]
+      "args": ["~/.gc-tools/mcp-plugin/dist/index.js"]
     }
   }
 }
+```
+
+Verify the tools are working by restarting Claude Code and asking:
+
+> "Use the grid_carbon_intensity tool to check Italy's carbon intensity"
+
+If the agent returns a gCO2eq/kWh value, the MCP server is working correctly.
 ```
 
 ## MCP tools
@@ -142,22 +141,16 @@ sustainable-code-skill-setup/
   CONTRIBUTING.md                         # How to contribute
   LICENSE                                 # MIT
   skills-agent/                           # Copy this into .claude/skills/
-    gc-setup/                             # /gc-setup command
-      SKILL.md                            # Full audit (v3.0, 9 phases)
-      references/
-        sci-guide.md                      # SCI formula, constants, JS/TS/PHP
-        wsg-checklist.md                  # 80-guideline WSG 1.0 checklist
-        accessibility-setup.md            # Lighthouse CI configuration
-        green-patterns.md                 # GSF patterns catalog
-        creedengo-rules.md                # Creedengo green code rules
-        swd-model.md                      # SWD v4 page emissions model
-        eco-ci-setup.md                   # CI energy measurement
-        phase-output-examples.md          # Expected output formats
-    gc-measure-sci/                       # /gc-measure-sci command
+    gc-setup/                             # /gc-setup — full 9-phase audit
       SKILL.md
-    gc-check-sustainability/              # /gc-check-sustainability command
+      references/                         # 8 reference files loaded on-demand
+    gc-dev/                               # /gc-dev — daily dev companion
       SKILL.md
-    gc-estimate-emissions/                # /gc-estimate-emissions command
+    gc-measure-sci/                       # /gc-measure-sci — SCI measurement
+      SKILL.md
+    gc-check-sustainability/              # /gc-check-sustainability — quick check
+      SKILL.md
+    gc-estimate-emissions/                # /gc-estimate-emissions — page emissions
       SKILL.md
   mcp-plugin/                             # MCP server (optional, Step 2)
     src/tools/                            # 8 tool implementations

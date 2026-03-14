@@ -31,6 +31,8 @@ skills-agent/
   gc-setup/                 # /gc-setup — full 9-phase audit (v3.0)
     SKILL.md
     references/             # Reference material for each skill phase
+  gc-dev/                   # /gc-dev — daily dev companion
+    SKILL.md
   gc-measure-sci/           # /gc-measure-sci — quick SCI measurement
     SKILL.md
   gc-check-sustainability/  # /gc-check-sustainability — quick check

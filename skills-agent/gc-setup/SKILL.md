@@ -47,6 +47,7 @@ If these tools are not available, follow the manual methodology described in eac
 
 For quick, targeted actions use these companion skills instead of the full audit:
 
+- `/gc-dev` — daily development companion (green check, feature planning, PR review)
 - `/gc-measure-sci` — measure SCI for a specific operation
 - `/gc-check-sustainability` — quick WSG + green hosting + creedengo check
 - `/gc-estimate-emissions` — estimate page or sitemap emissions
