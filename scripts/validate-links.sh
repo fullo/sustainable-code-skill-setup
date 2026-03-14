@@ -30,11 +30,13 @@ find . -name '*.md' -not -path './mcp-plugin/node_modules/*' -not -path './.git/
 done
 
 # Check that all reference files mentioned in SKILL.md exist
-refs=$(grep -o 'references/[a-z-]*\.md' SKILL.md | sort -u || true)
+SKILL_FILE="skills-agent/sustainable-project-setup/SKILL.md"
+refs=$(grep -o 'references/[a-z-]*\.md' "$SKILL_FILE" | sort -u || true)
 if [ -n "$refs" ]; then
     echo "$refs" | while IFS= read -r ref; do
-        if [ ! -f "$ref" ]; then
-            echo "BROKEN in SKILL.md: $ref does not exist"
+        target="skills-agent/sustainable-project-setup/$ref"
+        if [ ! -f "$target" ]; then
+            echo "BROKEN in SKILL.md: $ref does not exist (resolved: $target)"
             echo "1" >> "$ERRORS_FILE"
         fi
     done

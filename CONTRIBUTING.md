@@ -27,8 +27,10 @@ Open a GitHub issue describing the problem, the expected behavior, and steps to 
 ## Project structure
 
 ```
-SKILL.md                    # Main agent skill definition (v2.0)
-references/                 # Reference material for each skill phase
+skills-agent/
+  sustainable-project-setup/
+    SKILL.md                # Main agent skill definition (v2.0)
+    references/             # Reference material for each skill phase
 mcp-plugin/                 # MCP server with sustainability tools
   src/tools/                # Tool implementations
   src/tools/__tests__/      # Test files (vitest)
@@ -78,10 +80,10 @@ Some reference files contain data that may become outdated:
 
 | Data | File | Source | Update frequency |
 |------|------|--------|-----------------|
-| Grid carbon intensity | `mcp-plugin/src/tools/grid-intensity.ts`, `references/sci-guide.md` | [Ember Global Electricity Review](https://ember-energy.org/) | Annual |
-| SWD coefficients | `mcp-plugin/src/lib/constants.ts`, `references/swd-model.md` | [sustainablewebdesign.org](https://sustainablewebdesign.org/estimating-digital-emissions/) | When model updates |
-| WSG guidelines | `references/wsg-checklist.md` | [W3C WSG](https://www.w3.org/TR/web-sustainability-guidelines/) | When spec updates |
-| Creedengo rules | `references/creedengo-rules.md` | [creedengo-rules-specifications](https://github.com/green-code-initiative/creedengo-rules-specifications) | Per release |
+| Grid carbon intensity | `mcp-plugin/src/tools/grid-intensity.ts`, `skills-agent/.../references/sci-guide.md` | [Ember Global Electricity Review](https://ember-energy.org/) | Annual |
+| SWD coefficients | `mcp-plugin/src/lib/constants.ts`, `skills-agent/.../references/swd-model.md` | [sustainablewebdesign.org](https://sustainablewebdesign.org/estimating-digital-emissions/) | When model updates |
+| WSG guidelines | `skills-agent/.../references/wsg-checklist.md` | [W3C WSG](https://www.w3.org/TR/web-sustainability-guidelines/) | When spec updates |
+| Creedengo rules | `skills-agent/.../references/creedengo-rules.md` | [creedengo-rules-specifications](https://github.com/green-code-initiative/creedengo-rules-specifications) | Per release |
 
 When updating data, update both the reference file and the corresponding MCP tool constants.
 

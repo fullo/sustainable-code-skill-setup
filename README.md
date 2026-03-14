@@ -1,6 +1,6 @@
 # Sustainable Project Setup — Agent Skill
 
-[![Skill Version](https://img.shields.io/badge/skill-v2.0-blue)](SKILL.md)
+[![Skill Version](https://img.shields.io/badge/skill-v2.0-blue)](skills-agent/sustainable-project-setup/SKILL.md)
 [![MCP Tools](https://img.shields.io/badge/MCP_tools-8-green)](mcp-plugin/)
 [![CI](https://github.com/fullo/sustainable-code-skill-setup/actions/workflows/ci.yml/badge.svg)](https://github.com/fullo/sustainable-code-skill-setup/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
@@ -40,30 +40,81 @@ When activated, the skill guides your AI agent through a 9-phase workflow:
 
 ## Installation
 
-### Option 1 — Git submodule (recommended)
+### Step 1 — Install the skill
+
+Copy the `skills-agent/` contents into your project's `.claude/skills/` directory:
 
 ```bash
-git submodule add https://github.com/fullo/sustainable-code-skill-setup.git .claude/skills/sustainable-project-setup
+git clone https://github.com/fullo/sustainable-code-skill-setup.git /tmp/sustainable-skill
+cp -r /tmp/sustainable-skill/skills-agent/* .claude/skills/
+rm -rf /tmp/sustainable-skill
 ```
 
-### Option 2 — Copy
+Or as a git submodule (mounts the full repo, but the agent only reads `skills-agent/`):
+
+```bash
+git submodule add https://github.com/fullo/sustainable-code-skill-setup.git .sustainable-skill
+mkdir -p .claude/skills
+cp -r .sustainable-skill/skills-agent/* .claude/skills/
+```
+
+For a global installation available across all projects:
+
+```bash
+git clone https://github.com/fullo/sustainable-code-skill-setup.git /tmp/sustainable-skill
+cp -r /tmp/sustainable-skill/skills-agent/* ~/.claude/skills/
+rm -rf /tmp/sustainable-skill
+```
+
+Your `.claude/skills/` directory will contain:
+
+```
+.claude/skills/
+  sustainable-project-setup/
+    SKILL.md                            # Skill definition (9 phases)
+    references/                         # 8 reference files loaded on-demand
+```
+
+### Step 2 (optional) — Enable MCP tools
+
+The MCP plugin gives your agent access to 8 sustainability measurement tools. This enhances the skill with real-time calculations but is not required.
+
+```bash
+npm install -g sustainable-code-mcp
+```
+
+Then add to your `.claude/settings.json`:
+
+```json
+{
+  "mcpServers": {
+    "sustainable-code": {
+      "command": "sustainable-code-mcp"
+    }
+  }
+}
+```
+
+Or run from source:
 
 ```bash
 git clone https://github.com/fullo/sustainable-code-skill-setup.git
-cp -r sustainable-code-skill-setup/ .claude/skills/sustainable-project-setup/
+cd sustainable-code-skill-setup/mcp-plugin
+npm install && npm run build
 ```
 
-### Option 3 — Global skill
-
-Place the skill in your home directory to make it available across all projects:
-
-```bash
-git clone https://github.com/fullo/sustainable-code-skill-setup.git ~/.claude/skills/sustainable-project-setup
+```json
+{
+  "mcpServers": {
+    "sustainable-code": {
+      "command": "node",
+      "args": ["/absolute/path/to/mcp-plugin/dist/index.js"]
+    }
+  }
+}
 ```
 
-## MCP Plugin
-
-The `mcp-plugin/` directory provides a standalone MCP server with five sustainability tools that any MCP-compatible agent can use directly:
+## MCP tools
 
 | Tool | Description |
 |------|-------------|
@@ -76,37 +127,32 @@ The `mcp-plugin/` directory provides a standalone MCP server with five sustainab
 | `sci_compare` | Compare two SCI measurements and report delta/improvement |
 | `swd_batch` | Estimate emissions for multiple pages at once (sitemap analysis) |
 
-Install and run:
-
-```bash
-cd mcp-plugin
-npm install
-npm run build
-npm start
-```
-
 ## File structure
 
 ```
-sustainable-project-setup/
-  SKILL.md                              # Main skill (v2.0, 9 phases)
-  CLAUDE.md                             # Project guidelines for AI agents
-  CONTRIBUTING.md                       # How to contribute
-  references/
-    sci-guide.md                        # SCI formula, constants, JS/TS/PHP implementation
-    wsg-checklist.md                    # Complete 80-guideline WSG 1.0 checklist + JSON template
-    accessibility-setup.md              # Lighthouse CI configuration and manual checks
-    green-patterns.md                   # Green Software Foundation patterns catalog
-    creedengo-rules.md                  # Creedengo static analysis rules for green code
-    swd-model.md                        # Sustainable Web Design Model v4 for page emissions
-    eco-ci-setup.md                     # CI pipeline energy measurement with eco-ci
-    phase-output-examples.md            # Expected output format for each phase
+sustainable-code-skill-setup/
+  README.md                               # This file
+  CONTRIBUTING.md                         # How to contribute
+  LICENSE                                 # MIT
+  skills-agent/
+    sustainable-project-setup/
+      SKILL.md                            # Main skill (v2.0, 9 phases)
+      references/
+        sci-guide.md                      # SCI formula, constants, JS/TS/PHP implementation
+        wsg-checklist.md                  # Complete 80-guideline WSG 1.0 checklist + JSON template
+        accessibility-setup.md            # Lighthouse CI configuration and manual checks
+        green-patterns.md                 # Green Software Foundation patterns catalog
+        creedengo-rules.md               # Creedengo static analysis rules for green code
+        swd-model.md                      # Sustainable Web Design Model v4 for page emissions
+        eco-ci-setup.md                   # CI pipeline energy measurement with eco-ci
+        phase-output-examples.md          # Expected output format for each phase
   mcp-plugin/
-    src/tools/                          # Eight MCP tool implementations
-    src/tools/__tests__/                # Test suite (72 tests)
-    src/lib/                            # Shared constants and types
-    vitest.config.ts                    # Test configuration
-    package.json                        # Dependencies and scripts
+    src/tools/                            # Eight MCP tool implementations
+    src/tools/__tests__/                  # Test suite (72 tests)
+    src/lib/                              # Shared constants and types
+    vitest.config.ts                      # Test configuration
+    package.json                          # Dependencies and scripts
+  scripts/                                # Validation and CI helper scripts
 ```
 
 The skill uses **progressive disclosure**: agents load `SKILL.md` first (~100 tokens for metadata), the full body on activation, and reference files only when needed during specific phases.
@@ -131,8 +177,6 @@ The skill activates when a user mentions:
 - Eco-friendly development practices
 
 ## Development
-
-See [CLAUDE.md](CLAUDE.md) for build/test commands, project structure details, and editing guidelines.
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for how to contribute, commit conventions, and data update procedures.
 
