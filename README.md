@@ -1,14 +1,23 @@
-# Sustainable Project Setup — Agent Skill
+# Green Coding Skills — Agent Skills + MCP Tools
 
-[![Skill Version](https://img.shields.io/badge/skill-v2.0-blue)](skills-agent/sustainable-project-setup/SKILL.md)
+[![Skill Version](https://img.shields.io/badge/skill-v3.0-blue)](skills-agent/gc-setup/SKILL.md)
 [![MCP Tools](https://img.shields.io/badge/MCP_tools-8-green)](mcp-plugin/)
 [![CI](https://github.com/fullo/sustainable-code-skill-setup/actions/workflows/ci.yml/badge.svg)](https://github.com/fullo/sustainable-code-skill-setup/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Agent Skills](https://img.shields.io/badge/format-agentskills.io-purple)](https://agentskills.io/)
 
-An [Agent Skill](https://agentskills.io/) that audits any software project for environmental sustainability, accessibility, and quality, then implements measurable improvements.
+A collection of [Agent Skills](https://agentskills.io/) and MCP tools that audit software projects for environmental sustainability, accessibility, and quality, then implement measurable improvements.
 
-## What it does
+## Commands
+
+| Command | What it does |
+|---------|-------------|
+| `/gc-setup` | Full 9-phase sustainability audit (SCI, WSG, a11y, performance, testing, baselines) |
+| `/gc-measure-sci` | Measure SCI carbon intensity for a specific operation or endpoint |
+| `/gc-check-sustainability` | Quick sustainability check (WSG, green hosting, code patterns) |
+| `/gc-estimate-emissions` | Estimate CO2 emissions per page view or across a sitemap |
+
+## What `/gc-setup` covers
 
 When activated, the skill guides your AI agent through a 9-phase workflow:
 
@@ -22,7 +31,7 @@ When activated, the skill guides your AI agent through a 9-phase workflow:
 8. **Establish Baselines** — measurable targets for every dimension
 9. **Sustainability-Aware CLAUDE.md** — encode sustainability into the development workflow
 
-## What it covers
+## Standards and tools
 
 | Area | Standard / Tool |
 |------|----------------|
@@ -40,44 +49,42 @@ When activated, the skill guides your AI agent through a 9-phase workflow:
 
 ## Installation
 
-### Step 1 — Install the skill
+### Step 1 — Install the skills
 
 Copy the `skills-agent/` contents into your project's `.claude/skills/` directory:
 
 ```bash
-git clone https://github.com/fullo/sustainable-code-skill-setup.git /tmp/sustainable-skill
-cp -r /tmp/sustainable-skill/skills-agent/* .claude/skills/
-rm -rf /tmp/sustainable-skill
-```
-
-Or as a git submodule (mounts the full repo, but the agent only reads `skills-agent/`):
-
-```bash
-git submodule add https://github.com/fullo/sustainable-code-skill-setup.git .sustainable-skill
-mkdir -p .claude/skills
-cp -r .sustainable-skill/skills-agent/* .claude/skills/
+git clone https://github.com/fullo/sustainable-code-skill-setup.git /tmp/gc-skills
+cp -r /tmp/gc-skills/skills-agent/* .claude/skills/
+rm -rf /tmp/gc-skills
 ```
 
 For a global installation available across all projects:
 
 ```bash
-git clone https://github.com/fullo/sustainable-code-skill-setup.git /tmp/sustainable-skill
-cp -r /tmp/sustainable-skill/skills-agent/* ~/.claude/skills/
-rm -rf /tmp/sustainable-skill
+git clone https://github.com/fullo/sustainable-code-skill-setup.git /tmp/gc-skills
+cp -r /tmp/gc-skills/skills-agent/* ~/.claude/skills/
+rm -rf /tmp/gc-skills
 ```
 
 Your `.claude/skills/` directory will contain:
 
 ```
 .claude/skills/
-  sustainable-project-setup/
-    SKILL.md                            # Skill definition (9 phases)
+  gc-setup/                             # Full 9-phase audit
+    SKILL.md
     references/                         # 8 reference files loaded on-demand
+  gc-measure-sci/                       # Quick SCI measurement
+    SKILL.md
+  gc-check-sustainability/              # Quick sustainability check
+    SKILL.md
+  gc-estimate-emissions/                # Page/sitemap emissions
+    SKILL.md
 ```
 
 ### Step 2 (optional) — Enable MCP tools
 
-The MCP plugin gives your agent access to 8 sustainability measurement tools. This enhances the skill with real-time calculations but is not required.
+The MCP plugin gives your agent access to 8 sustainability measurement tools. This enhances the skills with real-time calculations but is not required — all skills include manual fallback instructions.
 
 ```bash
 npm install -g sustainable-code-mcp
@@ -116,16 +123,16 @@ npm install && npm run build
 
 ## MCP tools
 
-| Tool | Description |
-|------|-------------|
-| `sci_calculate` | Compute SCI carbon intensity per functional unit (operation, request, etc.) |
-| `swd_estimate` | Estimate page-level CO2 emissions using the Sustainable Web Design v4 model |
-| `check_green_hosting` | Check if a domain uses green hosting via The Green Web Foundation API |
-| `grid_carbon_intensity` | Look up grid carbon intensity (gCO2eq/kWh) by country code |
-| `wsg_compliance_score` | Score a WSG compliance JSON file and report gaps by category |
-| `creedengo_check` | Check a source file against green code rules (JS, PHP, Python, Java) |
-| `sci_compare` | Compare two SCI measurements and report delta/improvement |
-| `swd_batch` | Estimate emissions for multiple pages at once (sitemap analysis) |
+| Tool | Used by | Description |
+|------|---------|-------------|
+| `sci_calculate` | `/gc-setup`, `/gc-measure-sci` | Compute SCI carbon intensity per functional unit |
+| `swd_estimate` | `/gc-setup`, `/gc-estimate-emissions` | Estimate page-level CO2 via SWD v4 model |
+| `swd_batch` | `/gc-setup`, `/gc-estimate-emissions` | Estimate emissions for multiple pages at once |
+| `check_green_hosting` | `/gc-setup`, `/gc-check-sustainability` | Check if a domain uses green hosting |
+| `grid_carbon_intensity` | `/gc-setup`, `/gc-measure-sci` | Look up grid carbon intensity by country |
+| `wsg_compliance_score` | `/gc-setup`, `/gc-check-sustainability` | Score a WSG compliance JSON file |
+| `creedengo_check` | `/gc-setup`, `/gc-check-sustainability` | Check source files against green code rules |
+| `sci_compare` | `/gc-setup`, `/gc-measure-sci` | Compare two SCI measurements |
 
 ## File structure
 
@@ -134,28 +141,30 @@ sustainable-code-skill-setup/
   README.md                               # This file
   CONTRIBUTING.md                         # How to contribute
   LICENSE                                 # MIT
-  skills-agent/
-    sustainable-project-setup/
-      SKILL.md                            # Main skill (v2.0, 9 phases)
+  skills-agent/                           # Copy this into .claude/skills/
+    gc-setup/                             # /gc-setup command
+      SKILL.md                            # Full audit (v3.0, 9 phases)
       references/
-        sci-guide.md                      # SCI formula, constants, JS/TS/PHP implementation
-        wsg-checklist.md                  # Complete 80-guideline WSG 1.0 checklist + JSON template
-        accessibility-setup.md            # Lighthouse CI configuration and manual checks
-        green-patterns.md                 # Green Software Foundation patterns catalog
-        creedengo-rules.md               # Creedengo static analysis rules for green code
-        swd-model.md                      # Sustainable Web Design Model v4 for page emissions
-        eco-ci-setup.md                   # CI pipeline energy measurement with eco-ci
-        phase-output-examples.md          # Expected output format for each phase
-  mcp-plugin/
-    src/tools/                            # Eight MCP tool implementations
+        sci-guide.md                      # SCI formula, constants, JS/TS/PHP
+        wsg-checklist.md                  # 80-guideline WSG 1.0 checklist
+        accessibility-setup.md            # Lighthouse CI configuration
+        green-patterns.md                 # GSF patterns catalog
+        creedengo-rules.md                # Creedengo green code rules
+        swd-model.md                      # SWD v4 page emissions model
+        eco-ci-setup.md                   # CI energy measurement
+        phase-output-examples.md          # Expected output formats
+    gc-measure-sci/                       # /gc-measure-sci command
+      SKILL.md
+    gc-check-sustainability/              # /gc-check-sustainability command
+      SKILL.md
+    gc-estimate-emissions/                # /gc-estimate-emissions command
+      SKILL.md
+  mcp-plugin/                             # MCP server (optional, Step 2)
+    src/tools/                            # 8 tool implementations
     src/tools/__tests__/                  # Test suite (72 tests)
     src/lib/                              # Shared constants and types
-    vitest.config.ts                      # Test configuration
-    package.json                          # Dependencies and scripts
-  scripts/                                # Validation and CI helper scripts
+  scripts/                                # Validation and CI helpers
 ```
-
-The skill uses **progressive disclosure**: agents load `SKILL.md` first (~100 tokens for metadata), the full body on activation, and reference files only when needed during specific phases.
 
 ## Compatibility
 
@@ -166,15 +175,6 @@ This skill follows the [Agent Skills](https://agentskills.io/) open format and w
 - [Windsurf](https://windsurf.com/)
 - [Cline](https://github.com/cline/cline)
 - Any agent supporting the agentskills.io specification
-
-## Triggers
-
-The skill activates when a user mentions:
-
-- Setting up or onboarding to a project
-- Green code, carbon footprint, sustainability
-- SCI, WSG, or accessibility auditing
-- Eco-friendly development practices
 
 ## Development
 

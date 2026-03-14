@@ -1,0 +1,66 @@
+---
+name: gc-measure-sci
+description: >-
+  Measure the SCI (Software Carbon Intensity) for a specific operation, endpoint,
+  or feature. Use when the user asks to measure carbon, energy consumption, or SCI
+  for their code. Requires the sustainable-code MCP server for calculations, or
+  falls back to manual estimation.
+license: MIT
+metadata:
+  author: fullo
+  version: "1.0"
+---
+
+# Measure SCI
+
+Compute the [Software Carbon Intensity](https://sci-guide.greensoftware.foundation/) for $ARGUMENTS.
+
+## Steps
+
+1. **Identify the functional unit R** — what counts as "one operation"? (API request, page load, file processed, user session, CI run, etc.)
+
+2. **Measure energy E** (kWh per operation):
+   - **JS/TS projects**: integrate [SCI Profiler](https://github.com/fullo/sci-profiler) — uses `performance.now()` to estimate energy per operation
+   - **PHP projects**: integrate [sci-profiler-php](https://github.com/fullo/sci-profiler-php) — zero-code-changes via `auto_prepend_file`
+   - **Other languages**: use wall-clock CPU time benchmarks (`hyperfine`, profiler output) and convert to energy using TDP-based estimation
+   - **Cloud workloads**: use [Cloud Carbon Footprint](https://www.cloudcarbonfootprint.org/) or provider billing data
+
+3. **Determine carbon intensity I** (gCO2eq/kWh):
+   - Use the `grid_carbon_intensity` MCP tool with the deployment region's country code
+   - If MCP is not available: use 436 gCO2eq/kWh (2022 global average, Ember data)
+
+4. **Estimate embodied carbon M** (gCO2eq per operation):
+   - Shared infrastructure (serverless, CDN): M is near zero per operation
+   - Dedicated server: amortize total embodied carbon over expected lifespan and operations
+   - Default: use 0 if unknown, note as assumption
+
+5. **Calculate SCI**:
+   - Use the `sci_calculate` MCP tool with E, I, M, and R values
+   - If MCP is not available: compute manually as `SCI = ((E x I) + M) / R`
+
+6. **Report results**:
+
+```
+## SCI Measurement: [operation name]
+
+| Variable | Value | Source |
+|----------|-------|--------|
+| E (energy) | ? kWh | [method used] |
+| I (carbon intensity) | ? gCO2eq/kWh | [region/source] |
+| M (embodied) | ? gCO2eq | [estimation method] |
+| R (functional unit) | 1 [unit] | [definition] |
+| **SCI** | **? gCO2eq/[unit]** | |
+
+### Recommendations
+- [concrete actions to reduce SCI]
+```
+
+7. **Compare with baseline** (if a previous measurement exists):
+   - Use the `sci_compare` MCP tool to compute delta and improvement percentage
+   - If no baseline: record this as the initial baseline
+
+## Notes
+
+- SCI is a rate, not a total — lower is better
+- Always document assumptions and data sources
+- For a full sustainability audit, use `/gc-setup` instead

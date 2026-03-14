@@ -1,5 +1,5 @@
 ---
-name: sustainable-project-setup
+name: gc-setup
 description: >-
   Audits a software project for environmental sustainability, accessibility, and
   quality, then implements measurable improvements. Covers SCI carbon measurement,
@@ -11,10 +11,10 @@ description: >-
 license: MIT
 metadata:
   author: fullo
-  version: "2.0"
+  version: "3.0"
 ---
 
-# Sustainable Project Setup
+# Green Coding Setup
 
 Audit a codebase and establish a development workflow where environmental
 sustainability, accessibility, and quality are first-class engineering concerns.
@@ -25,6 +25,31 @@ sustainability, accessibility, and quality are first-class engineering concerns.
 - User asks about green code, carbon footprint, sustainability, SCI, WSG, or accessibility
 - Reviewing a project's environmental impact
 - Establishing quality baselines for a codebase
+
+## MCP tools (optional)
+
+If the `sustainable-code` MCP server is configured, use these tools during the relevant phases for real-time calculations instead of manual estimation:
+
+| Tool | Phase | Purpose |
+|------|-------|---------|
+| `sci_calculate` | 2 | Compute SCI per functional unit |
+| `grid_carbon_intensity` | 2 | Get grid carbon intensity for deployment region |
+| `swd_estimate` | 2 | Estimate page CO2 via SWD v4 model |
+| `swd_batch` | 2 | Estimate emissions for multiple pages at once |
+| `wsg_compliance_score` | 3 | Score a WSG compliance JSON file |
+| `creedengo_check` | 3 | Check source files against green code rules |
+| `check_green_hosting` | 4 | Verify hosting provider is green |
+| `sci_compare` | 8 | Compare baseline vs improved SCI measurements |
+
+If these tools are not available, follow the manual methodology described in each phase.
+
+## Related commands
+
+For quick, targeted actions use these companion skills instead of the full audit:
+
+- `/gc-measure-sci` — measure SCI for a specific operation
+- `/gc-check-sustainability` — quick WSG + green hosting + creedengo check
+- `/gc-estimate-emissions` — estimate page or sitemap emissions
 
 ## Workflow
 

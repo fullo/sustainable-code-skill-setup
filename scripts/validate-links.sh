@@ -29,18 +29,28 @@ find . -name '*.md' -not -path './mcp-plugin/node_modules/*' -not -path './.git/
     done
 done
 
-# Check that all reference files mentioned in SKILL.md exist
-SKILL_FILE="skills-agent/sustainable-project-setup/SKILL.md"
-refs=$(grep -o 'references/[a-z-]*\.md' "$SKILL_FILE" | sort -u || true)
-if [ -n "$refs" ]; then
-    echo "$refs" | while IFS= read -r ref; do
-        target="skills-agent/sustainable-project-setup/$ref"
-        if [ ! -f "$target" ]; then
-            echo "BROKEN in SKILL.md: $ref does not exist (resolved: $target)"
-            echo "1" >> "$ERRORS_FILE"
-        fi
-    done
+# Check that all reference files mentioned in gc-setup SKILL.md exist
+SKILL_FILE="skills-agent/gc-setup/SKILL.md"
+if [ -f "$SKILL_FILE" ]; then
+    refs=$(grep -o 'references/[a-z-]*\.md' "$SKILL_FILE" | sort -u || true)
+    if [ -n "$refs" ]; then
+        echo "$refs" | while IFS= read -r ref; do
+            target="skills-agent/gc-setup/$ref"
+            if [ ! -f "$target" ]; then
+                echo "BROKEN in SKILL.md: $ref does not exist (resolved: $target)"
+                echo "1" >> "$ERRORS_FILE"
+            fi
+        done
+    fi
 fi
+
+# Check that all skills have a SKILL.md
+for skill_dir in skills-agent/*/; do
+    if [ ! -f "${skill_dir}SKILL.md" ]; then
+        echo "MISSING: ${skill_dir}SKILL.md"
+        echo "1" >> "$ERRORS_FILE"
+    fi
+done
 
 if [ -s "$ERRORS_FILE" ]; then
     count=$(wc -l < "$ERRORS_FILE" | tr -d ' ')

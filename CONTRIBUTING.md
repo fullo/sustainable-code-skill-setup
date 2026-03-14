@@ -28,9 +28,15 @@ Open a GitHub issue describing the problem, the expected behavior, and steps to 
 
 ```
 skills-agent/
-  sustainable-project-setup/
-    SKILL.md                # Main agent skill definition (v2.0)
+  gc-setup/                 # /gc-setup — full 9-phase audit (v3.0)
+    SKILL.md
     references/             # Reference material for each skill phase
+  gc-measure-sci/           # /gc-measure-sci — quick SCI measurement
+    SKILL.md
+  gc-check-sustainability/  # /gc-check-sustainability — quick check
+    SKILL.md
+  gc-estimate-emissions/    # /gc-estimate-emissions — page emissions
+    SKILL.md
 mcp-plugin/                 # MCP server with sustainability tools
   src/tools/                # Tool implementations
   src/tools/__tests__/      # Test files (vitest)
