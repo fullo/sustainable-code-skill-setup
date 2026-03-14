@@ -85,6 +85,11 @@ If images, fonts, or media files changed:
 
 ### Actions needed
 1. ...
+
+### Methodology
+- Code patterns: Creedengo green code rules (green-code-initiative/creedengo-rules-specifications)
+- Dependency check: bundle size analysis via [tool]
+- Asset check: format and compression best practices per WSG 3.x guidelines
 ```
 
 ## Feature mode
@@ -180,6 +185,11 @@ git diff main...HEAD
 
 ### Recommendations
 1. ...
+
+### Methodology and sources
+- Code patterns: Creedengo green code rules
+- Green patterns: Green Software Foundation Patterns Catalog (patterns.greensoftware.foundation)
+- WSG reference: W3C Web Sustainability Guidelines 1.0
 ```
 
 ## Related commands

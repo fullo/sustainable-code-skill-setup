@@ -77,6 +77,12 @@ Score: ?/9 guidelines checked
 ### Top 5 Recommendations
 1. [highest impact action]
 2. ...
+
+### Methodology and sources
+- WSG standard: [W3C Web Sustainability Guidelines 1.0](https://www.w3.org/TR/web-sustainability-guidelines/)
+- Green hosting check: [The Green Web Foundation API](https://www.thegreenwebfoundation.org/) — database date [date]
+- Code rules: [Creedengo](https://github.com/green-code-initiative/creedengo-rules-specifications) green code rules
+- carbon.txt: [carbontxt.org](https://carbontxt.org/) standard
 ```
 
 ## Notes

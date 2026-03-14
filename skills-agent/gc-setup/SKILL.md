@@ -109,6 +109,18 @@ Deliverables:
 4. If possible, create an initial SCI benchmark for the top 5 operations
 5. **Web projects (page-level estimation)**: use the Sustainable Web Design Model v4 for quick top-down estimation of emissions per page view based on page weight. See [references/swd-model.md](references/swd-model.md). Use alongside SCI for a complete picture (SWD for page-level, SCI for operation-level).
 
+At the end of Phase 2, include a methodology section:
+
+```
+### Methodology and sources
+- Formula: SCI = ((E x I) + M) / R — Green Software Foundation SCI Specification v1.0
+- Grid carbon intensity: [value] gCO2eq/kWh — Ember Global Electricity Review [year]
+- Device power: [value] W — [source, e.g., Apple M1 Pro TDP, Intel TDP spec]
+- Embodied carbon: [value] gCO2eq — [source, e.g., Apple Product Environmental Report]
+- SWD model: Sustainable Web Design Model v4 — sustainablewebdesign.org
+- Measurement tool: [SCI Profiler / sci-profiler-php / hyperfine / manual estimate]
+```
+
 See [references/sci-guide.md](references/sci-guide.md) for the full SCI methodology, constants, and implementation patterns.
 
 ## Phase 3 — WSG Compliance
@@ -130,6 +142,16 @@ Deliverables:
 Cross-reference findings with the [cnumr 115 best practices](https://github.com/cnumr/best-practices) catalog (5th edition) — the most comprehensive eco-design web reference.
 
 Use [Creedengo rules](references/creedengo-rules.md) as automated code-level checks for energy-wasteful patterns. If SonarQube is available, install the Creedengo plugin. Otherwise, use the manual checklist from the reference as a code review guide.
+
+At the end of Phase 3, include:
+
+```
+### Methodology and sources
+- Standard: W3C Web Sustainability Guidelines 1.0 (https://www.w3.org/TR/web-sustainability-guidelines/)
+- Code rules: Creedengo (formerly ecoCode) — green-code-initiative/creedengo-rules-specifications
+- Best practices: cnumr 115 Best Practices, 5th edition
+- Green hosting: The Green Web Foundation API (https://www.thegreenwebfoundation.org/)
+```
 
 See [references/wsg-checklist.md](references/wsg-checklist.md) for the complete 80-guideline checklist and JSON template.
 
@@ -265,3 +287,4 @@ Apply these throughout:
 7. **Automate the checks** — if it's not in CI, it will regress
 8. **Track over time** — one measurement is a data point, a time series is a strategy
 9. **Design frugally** — apply Frugal UX principles: deliver more value with fewer resources (inspired by the Climate Product Leaders Playbook and Jugaad approach)
+10. **Science-based approach** — every measurement, recommendation, and report must cite the methodology used, the data sources, and their vintage. Without provenance, data is just opinion. Always include a "Methodology and sources" section in reports

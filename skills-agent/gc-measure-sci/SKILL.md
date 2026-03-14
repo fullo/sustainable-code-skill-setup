@@ -58,6 +58,13 @@ Compute the [Software Carbon Intensity](https://sci-guide.greensoftware.foundati
 
 ### Recommendations
 - [concrete actions to reduce SCI]
+
+### Methodology and sources
+- Formula: SCI = ((E x I) + M) / R — [Green Software Foundation SCI Specification v1.0](https://sci-guide.greensoftware.foundation/)
+- Grid carbon intensity: [value] gCO2eq/kWh — [Ember Global Electricity Review](https://ember-energy.org/) [year]
+- Device power: [value] W — [source]
+- Embodied carbon: [value] gCO2eq — [source]
+- Measurement tool: [tool name and version]
 ```
 
 7. **Compare with baseline** (if a previous measurement exists):

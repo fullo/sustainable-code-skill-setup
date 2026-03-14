@@ -56,6 +56,13 @@ Estimate CO2 emissions per page view using the [Sustainable Web Design Model v4]
 | Data centers | ?% |
 | Networks | ?% |
 | User devices | ?% |
+
+### Methodology and sources
+- Model: [Sustainable Web Design Model v4](https://sustainablewebdesign.org/estimating-digital-emissions/)
+- Grid carbon intensity: [value] gCO2eq/kWh — [Ember Global Electricity Review](https://ember-energy.org/) [year], or tool default (494 global avg)
+- New visitor ratio: [value] — [estimated / analytics data]
+- Page weight source: [DevTools / curl / Lighthouse]
+- Green hosting: [checked via Green Web Foundation API / not checked]
 ```
 
 ### Multiple pages (sitemap)
@@ -88,6 +95,11 @@ Estimate CO2 emissions per page view using the [Sustainable Web Design Model v4]
 ### Recommendations
 1. [action to reduce heaviest pages]
 2. ...
+
+### Methodology and sources
+- Model: Sustainable Web Design Model v4 — sustainablewebdesign.org
+- Grid carbon intensity: [value] gCO2eq/kWh — Ember [year]
+- Page weights: [source]
 ```
 
 ## Context
