@@ -92,6 +92,9 @@ sustainable-project-setup/
   SKILL.md                              # Main skill (v2.0, 9 phases)
   CLAUDE.md                             # Project guidelines for AI agents
   CONTRIBUTING.md                       # How to contribute
+  .claude/
+    settings.json                       # MCP server config for local development
+    skills/sustainable-project-setup/   # Symlinks to SKILL.md and references/
   references/
     sci-guide.md                        # SCI formula, constants, JS/TS/PHP implementation
     wsg-checklist.md                    # Complete 80-guideline WSG 1.0 checklist + JSON template
