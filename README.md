@@ -101,18 +101,20 @@ cd ~/.gc-tools/mcp-plugin
 npm install && npm run build
 ```
 
-Then add to your `.claude/settings.json`:
+Then add to your project's `.claude/settings.json` (replace `$HOME` with your actual home directory path):
 
 ```json
 {
   "mcpServers": {
     "sustainable-code": {
       "command": "node",
-      "args": ["~/.gc-tools/mcp-plugin/dist/index.js"]
+      "args": ["/Users/yourname/.gc-tools/mcp-plugin/dist/index.js"]
     }
   }
 }
 ```
+
+> **Tip:** Run `echo $HOME` to get your home directory path. For example, on macOS it's typically `/Users/yourname`, on Linux `/home/yourname`.
 
 Verify the tools are working by restarting Claude Code and asking:
 
@@ -152,6 +154,13 @@ sustainable-code-skill-setup/
       SKILL.md
     gc-estimate-emissions/                # /gc-estimate-emissions — page emissions
       SKILL.md
+  examples/                               # Walkthroughs and reference docs
+    01-first-audit.md                     # Full /gc-setup example
+    02-measure-sci.md                     # SCI measurement example
+    03-page-emissions.md                  # Page emissions example
+    04-daily-workflow.md                  # Daily dev workflow
+    05-mcp-tools-reference.md            # Complete MCP tools reference
+    sample-wsg-compliance.json           # Sample WSG compliance file
   mcp-plugin/                             # MCP server (optional, Step 2)
     src/tools/                            # 8 tool implementations
     src/tools/__tests__/                  # Test suite (72 tests)
@@ -168,6 +177,18 @@ This skill follows the [Agent Skills](https://agentskills.io/) open format and w
 - [Windsurf](https://windsurf.com/)
 - [Cline](https://github.com/cline/cline)
 - Any agent supporting the agentskills.io specification
+
+## Examples
+
+The [`examples/`](examples/) directory contains complete walkthroughs and reference documentation:
+
+| Example | Description |
+|---------|-------------|
+| [First Audit](examples/01-first-audit.md) | Full `/gc-setup` walkthrough on a Next.js app |
+| [Measure SCI](examples/02-measure-sci.md) | SCI measurement for an API endpoint (with and without MCP) |
+| [Page Emissions](examples/03-page-emissions.md) | Single page and full sitemap emissions estimation |
+| [Daily Workflow](examples/04-daily-workflow.md) | How `/gc-dev` integrates into your development cycle |
+| [MCP Tools Reference](examples/05-mcp-tools-reference.md) | Complete reference for all 8 MCP tools with parameters and examples |
 
 ## Development
 
