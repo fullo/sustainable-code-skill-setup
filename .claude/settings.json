@@ -1,8 +1,0 @@
-{
-  "mcpServers": {
-    "sustainable-code": {
-      "command": "node",
-      "args": ["mcp-plugin/dist/index.js"]
-    }
-  }
-}

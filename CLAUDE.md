@@ -12,9 +12,6 @@
   - `swd-model.md` -- Sustainable Web Design Model v4 for page emissions
   - `eco-ci-setup.md` -- CI pipeline energy measurement with eco-ci
 - `mcp-plugin/` -- MCP server providing 8 sustainability tools
-- `.claude/` -- Claude Code integration
-  - `settings.json` -- MCP server config pointing to local plugin
-  - `skills/sustainable-project-setup/` -- Symlinks to SKILL.md and references/
 - `scripts/` -- Validation and CI helper scripts
 - `.github/workflows/ci.yml` -- GitHub Actions CI pipeline
 
