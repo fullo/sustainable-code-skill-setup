@@ -11,7 +11,9 @@
   - `creedengo-rules.md` -- Creedengo static analysis rules for green code
   - `swd-model.md` -- Sustainable Web Design Model v4 for page emissions
   - `eco-ci-setup.md` -- CI pipeline energy measurement with eco-ci
-- `mcp-plugin/` -- MCP server providing 5 sustainability tools
+- `mcp-plugin/` -- MCP server providing 8 sustainability tools
+- `scripts/` -- Validation and CI helper scripts
+- `.github/workflows/ci.yml` -- GitHub Actions CI pipeline
 
 ## Build and test
 
@@ -30,6 +32,9 @@ npm run dev       # Development mode with tsx
 - `check_green_hosting` -- Green Web Foundation hosting check
 - `grid_carbon_intensity` -- Grid carbon intensity by country
 - `wsg_compliance_score` -- WSG compliance JSON scorer
+- `creedengo_check` -- Green code rule check on source files (JS, PHP, Python, Java)
+- `sci_compare` -- Compare two SCI measurements (delta, improvement %)
+- `swd_batch` -- Batch page emissions estimation (sitemap analysis)
 
 ## Editing guidelines
 

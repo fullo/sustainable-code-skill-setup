@@ -1,8 +1,8 @@
 # Sustainable Project Setup — Agent Skill
 
 [![Skill Version](https://img.shields.io/badge/skill-v2.0-blue)](SKILL.md)
-[![MCP Tools](https://img.shields.io/badge/MCP_tools-5-green)](mcp-plugin/)
-[![Tests](https://img.shields.io/badge/tests-38_passing-brightgreen)](mcp-plugin/)
+[![MCP Tools](https://img.shields.io/badge/MCP_tools-8-green)](mcp-plugin/)
+[![CI](https://github.com/fullo/sustainable-code-skill-setup/actions/workflows/ci.yml/badge.svg)](https://github.com/fullo/sustainable-code-skill-setup/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Agent Skills](https://img.shields.io/badge/format-agentskills.io-purple)](https://agentskills.io/)
 
@@ -72,6 +72,9 @@ The `mcp-plugin/` directory provides a standalone MCP server with five sustainab
 | `check_green_hosting` | Check if a domain uses green hosting via The Green Web Foundation API |
 | `grid_carbon_intensity` | Look up grid carbon intensity (gCO2eq/kWh) by country code |
 | `wsg_compliance_score` | Score a WSG compliance JSON file and report gaps by category |
+| `creedengo_check` | Check a source file against green code rules (JS, PHP, Python, Java) |
+| `sci_compare` | Compare two SCI measurements and report delta/improvement |
+| `swd_batch` | Estimate emissions for multiple pages at once (sitemap analysis) |
 
 Install and run:
 
@@ -99,8 +102,8 @@ sustainable-project-setup/
     eco-ci-setup.md                     # CI pipeline energy measurement with eco-ci
     phase-output-examples.md            # Expected output format for each phase
   mcp-plugin/
-    src/tools/                          # Five MCP tool implementations
-    src/tools/__tests__/                # Test suite (38 tests)
+    src/tools/                          # Eight MCP tool implementations
+    src/tools/__tests__/                # Test suite (72 tests)
     src/lib/                            # Shared constants and types
     vitest.config.ts                    # Test configuration
     package.json                        # Dependencies and scripts

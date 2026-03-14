@@ -117,6 +117,103 @@ export interface WsgGap {
 }
 
 /**
+ * A single issue found by the Creedengo code checker.
+ */
+export interface CreedengoIssue {
+  /** Line number where the issue was found. */
+  line: number;
+  /** Rule identifier (e.g., "GCI69"). */
+  rule: string;
+  /** Severity level. */
+  severity: "warning" | "info";
+  /** Description of the issue. */
+  message: string;
+  /** Suggested fix. */
+  suggestion: string;
+}
+
+/**
+ * Result of a Creedengo code check.
+ */
+export interface CreedengoResult {
+  /** Path to the file that was checked. */
+  filePath: string;
+  /** Detected or overridden language. */
+  language: string;
+  /** Total number of issues found. */
+  issuesFound: number;
+  /** List of issues. */
+  issues: CreedengoIssue[];
+}
+
+/**
+ * Input parameters for an SCI comparison.
+ */
+export interface SciCompareInput {
+  /** Baseline SCI value in mgCO2eq. */
+  baselineSciMg: number;
+  /** Current SCI value in mgCO2eq. */
+  currentSciMg: number;
+  /** Label for the baseline measurement. */
+  baselineLabel?: string;
+  /** Label for the current measurement. */
+  currentLabel?: string;
+}
+
+/**
+ * Result of an SCI comparison.
+ */
+export interface SciCompareResult {
+  /** Label for the baseline measurement. */
+  baselineLabel: string;
+  /** Baseline SCI value in mgCO2eq. */
+  baselineSciMg: number;
+  /** Label for the current measurement. */
+  currentLabel: string;
+  /** Current SCI value in mgCO2eq. */
+  currentSciMg: number;
+  /** Absolute delta in mgCO2eq (current - baseline). */
+  deltaMg: number;
+  /** Percentage change from baseline. */
+  deltaPercent: number;
+  /** Whether the current value is an improvement (lower). */
+  improved: boolean;
+  /** Human-readable summary string. */
+  summary: string;
+}
+
+/**
+ * A single page entry for SWD batch estimation.
+ */
+export interface SwdBatchPage {
+  /** URL of the page. */
+  url: string;
+  /** Transfer size of the page in bytes. */
+  weightBytes: number;
+}
+
+/**
+ * Result of a batch SWD estimation across multiple pages.
+ */
+export interface SwdBatchResult {
+  /** Sum of per-visit emissions for all pages in mgCO2eq. */
+  totalEmissionsPerVisitMg: number;
+  /** Total monthly emissions in kgCO2eq (only if monthlyVisitors provided). */
+  totalMonthlyEmissionsKg?: number;
+  /** Per-page breakdown sorted by emissions descending. */
+  pages: Array<{
+    url: string;
+    weightBytes: number;
+    emissionsPerVisitMg: number;
+    percentage: number;
+  }>;
+  /** URL of the page with highest emissions. */
+  heaviestPage: string;
+  /** URL of the page with lowest emissions. */
+  lightestPage: string;
+}
+
+/**
  * Result of a WSG compliance score calculation.
  */
 export interface WsgComplianceResult {

@@ -9,6 +9,9 @@ import { estimateSwd } from "./tools/swd-estimate.js";
 import { checkGreenHosting } from "./tools/green-hosting.js";
 import { getGridIntensity } from "./tools/grid-intensity.js";
 import { calculateWsgScore } from "./tools/wsg-score.js";
+import { checkCreedengo } from "./tools/creedengo-check.js";
+import { compareSci } from "./tools/sci-compare.js";
+import { estimateSwdBatch } from "./tools/swd-batch.js";
 
 const server = new McpServer({
   name: "sustainable-code",
@@ -242,6 +245,156 @@ server.tool(
   async (params) => {
     try {
       const result = await calculateWsgScore(params.filePath);
+      return {
+        content: [
+          {
+            type: "text" as const,
+            text: JSON.stringify(result, null, 2),
+          },
+        ],
+      };
+    } catch (err) {
+      const message =
+        err instanceof Error ? err.message : "Unknown error";
+      return {
+        content: [{ type: "text" as const, text: `Error: ${message}` }],
+        isError: true,
+      };
+    }
+  }
+);
+
+// --- Tool: creedengo_check -------------------------------------------------
+
+server.tool(
+  "creedengo_check",
+  "Check a source file against Creedengo-style green coding rules. " +
+    "Detects anti-patterns that waste energy (e.g., setInterval, SELECT *, " +
+    "wildcard imports) and suggests greener alternatives. " +
+    "Supports JavaScript/TypeScript, PHP, and Python.",
+  {
+    filePath: z
+      .string()
+      .min(1)
+      .describe("Absolute path to a source file to check."),
+    language: z
+      .string()
+      .optional()
+      .describe(
+        "Language override (javascript, php, python, java). Auto-detected from extension if omitted."
+      ),
+  },
+  async (params) => {
+    try {
+      const result = await checkCreedengo(params.filePath, params.language);
+      return {
+        content: [
+          {
+            type: "text" as const,
+            text: JSON.stringify(result, null, 2),
+          },
+        ],
+      };
+    } catch (err) {
+      const message =
+        err instanceof Error ? err.message : "Unknown error";
+      return {
+        content: [{ type: "text" as const, text: `Error: ${message}` }],
+        isError: true,
+      };
+    }
+  }
+);
+
+// --- Tool: sci_compare -----------------------------------------------------
+
+server.tool(
+  "sci_compare",
+  "Compare two SCI (Software Carbon Intensity) measurements and report the " +
+    "delta. Returns absolute and percentage change, whether the score improved, " +
+    "and a human-readable summary.",
+  {
+    baselineSciMg: z
+      .number()
+      .positive()
+      .describe("Baseline SCI value in mgCO2eq."),
+    currentSciMg: z
+      .number()
+      .positive()
+      .describe("Current SCI value in mgCO2eq."),
+    baselineLabel: z
+      .string()
+      .optional()
+      .describe("Label for baseline. Defaults to 'baseline'."),
+    currentLabel: z
+      .string()
+      .optional()
+      .describe("Label for current. Defaults to 'current'."),
+  },
+  async (params) => {
+    try {
+      const result = compareSci({
+        baselineSciMg: params.baselineSciMg,
+        currentSciMg: params.currentSciMg,
+        baselineLabel: params.baselineLabel,
+        currentLabel: params.currentLabel,
+      });
+      return {
+        content: [
+          {
+            type: "text" as const,
+            text: JSON.stringify(result, null, 2),
+          },
+        ],
+      };
+    } catch (err) {
+      const message =
+        err instanceof Error ? err.message : "Unknown error";
+      return {
+        content: [{ type: "text" as const, text: `Error: ${message}` }],
+        isError: true,
+      };
+    }
+  }
+);
+
+// --- Tool: swd_batch -------------------------------------------------------
+
+server.tool(
+  "swd_batch",
+  "Estimate SWD (Sustainable Web Design) emissions for multiple pages at once. " +
+    "Aggregates per-page emissions, sorts by impact, and identifies the heaviest " +
+    "and lightest pages. Useful for sitemap-level audits.",
+  {
+    pages: z
+      .array(
+        z.object({
+          url: z.string(),
+          weightBytes: z.number().positive(),
+        })
+      )
+      .min(1)
+      .describe(
+        "Array of pages with URL and transfer size in bytes."
+      ),
+    monthlyVisitors: z
+      .number()
+      .positive()
+      .optional()
+      .describe("Monthly visitors for total calculation."),
+    carbonIntensity: z
+      .number()
+      .positive()
+      .optional()
+      .describe("Grid carbon intensity. Defaults to 494."),
+  },
+  async (params) => {
+    try {
+      const result = estimateSwdBatch(
+        params.pages,
+        params.monthlyVisitors,
+        params.carbonIntensity
+      );
       return {
         content: [
           {

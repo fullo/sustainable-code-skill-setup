@@ -112,8 +112,17 @@ Parse a WSG compliance JSON file and calculate a compliance score with gap analy
 
 ## Installation
 
+### From npm
+
 ```bash
-cd mcp-plugin
+npm install -g sustainable-code-mcp
+```
+
+### From source
+
+```bash
+git clone https://github.com/fullo/sustainable-code-skill-setup.git
+cd sustainable-code-skill-setup/mcp-plugin
 npm install
 npm run build
 ```
@@ -126,8 +135,8 @@ Add the server to your Claude Code MCP settings. In `.claude/settings.json` or `
 {
   "mcpServers": {
     "sustainable-code": {
-      "command": "node",
-      "args": ["/absolute/path/to/mcp-plugin/dist/index.js"]
+      "command": "npx",
+      "args": ["-y", "sustainable-code-mcp"]
     }
   }
 }
