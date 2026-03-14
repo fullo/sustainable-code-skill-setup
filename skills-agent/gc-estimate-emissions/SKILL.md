@@ -25,12 +25,15 @@ Estimate CO2 emissions per page view using the [Sustainable Web Design Model v4]
 
 2. **Estimate emissions**:
    - Use the `swd_estimate` MCP tool with:
-     - `bytes`: total transfer size
-     - `greenHosting`: true/false (check with `check_green_hosting` if unsure)
-     - `returnVisitorRatio`: estimated fraction of return visitors (default 0.25)
+     - `pageWeightBytes` (required): total transfer size in bytes
+     - `monthlyVisitors`: monthly unique visitors (enables monthly totals)
+     - `newVisitorRatio`: fraction of new visitors, 0-1 (default: 0.75)
+     - `returnCacheRatio`: cache hit ratio for returning visitors, 0-1 (default: 0.02)
+     - `carbonIntensity`: grid intensity in gCO2eq/kWh (default: 494 global average)
+   - To check green hosting: use `check_green_hosting` MCP tool with the domain
    - If MCP is not available, compute manually:
      - Energy per visit = bytes x 0.81 kWh/GB (adjusted for new/return visitor mix)
-     - CO2 = energy x grid intensity (436 gCO2eq/kWh global average)
+     - CO2 = energy x grid intensity (494 gCO2eq/kWh global average)
      - Green hosting reduces data center segment by ~81%
 
 3. **Report**:
@@ -60,7 +63,10 @@ Estimate CO2 emissions per page view using the [Sustainable Web Design Model v4]
 1. **Collect page weights** for the most important pages (home, top landing pages, key flows)
 
 2. **Batch estimate**:
-   - Use the `swd_batch` MCP tool with an array of `{ url, bytes }` entries
+   - Use the `swd_batch` MCP tool with:
+     - `pages` (required): array of `{ "url": "...", "weightBytes": 123456 }` objects
+     - `monthlyVisitors`: monthly visitors for total calculation
+     - `carbonIntensity`: grid intensity in gCO2eq/kWh (default: 494)
    - If MCP is not available: compute each page individually using the formula above
 
 3. **Report**:

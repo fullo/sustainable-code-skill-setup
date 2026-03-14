@@ -35,7 +35,12 @@ Compute the [Software Carbon Intensity](https://sci-guide.greensoftware.foundati
    - Default: use 0 if unknown, note as assumption
 
 5. **Calculate SCI**:
-   - Use the `sci_calculate` MCP tool with E, I, M, and R values
+   - Use the `sci_calculate` MCP tool with:
+     - `wallTimeMs` (required): wall-clock execution time in milliseconds
+     - `carbonIntensity`: grid intensity in gCO2eq/kWh (from step 3)
+     - `devicePowerW`: device power in watts (default: 18W for M1 Pro)
+     - `embodiedTotalG`: total embodied emissions in gCO2eq (default: 211000)
+     - `lifetimeHours`: expected device lifetime in hours (default: 11680)
    - If MCP is not available: compute manually as `SCI = ((E x I) + M) / R`
 
 6. **Report results**:
@@ -56,7 +61,11 @@ Compute the [Software Carbon Intensity](https://sci-guide.greensoftware.foundati
 ```
 
 7. **Compare with baseline** (if a previous measurement exists):
-   - Use the `sci_compare` MCP tool to compute delta and improvement percentage
+   - Use the `sci_compare` MCP tool with:
+     - `baselineSciMg`: previous SCI value in mgCO2eq
+     - `currentSciMg`: new SCI value in mgCO2eq
+     - `baselineLabel`: description of baseline (e.g., "before optimization")
+     - `currentLabel`: description of current (e.g., "after tree-shaking")
    - If no baseline: record this as the initial baseline
 
 ## Notes

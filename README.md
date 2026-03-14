@@ -94,8 +94,9 @@ Your `.claude/skills/` directory will contain:
 
 The MCP plugin gives your agent access to 8 sustainability measurement tools. This enhances the skills with real-time calculations but is not required — all skills include manual fallback instructions.
 
+If you already cloned in Step 1, just build the MCP plugin:
+
 ```bash
-git clone https://github.com/fullo/sustainable-code-skill-setup.git ~/.gc-tools
 cd ~/.gc-tools/mcp-plugin
 npm install && npm run build
 ```
@@ -118,7 +119,6 @@ Verify the tools are working by restarting Claude Code and asking:
 > "Use the grid_carbon_intensity tool to check Italy's carbon intensity"
 
 If the agent returns a gCO2eq/kWh value, the MCP server is working correctly.
-```
 
 ## MCP tools
 

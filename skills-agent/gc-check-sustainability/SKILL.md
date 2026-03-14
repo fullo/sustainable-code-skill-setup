@@ -30,11 +30,11 @@ Review the codebase against the most impactful [W3C Web Sustainability Guideline
 - **2.7** Dark mode / `prefers-color-scheme` support?
 - **2.15** System font stack or minimal web fonts?
 
-If a `wsg-compliance.json` file exists, use the `wsg_compliance_score` MCP tool to score it. Otherwise, produce a quick manual assessment.
+If a `wsg-compliance.json` file exists, use the `wsg_compliance_score` MCP tool with `filePath` pointing to the JSON file. The file must be a JSON array of objects with `id`, `status` (`full`/`partial`/`gap`/`na`), and `category` fields. Otherwise, produce a quick manual assessment.
 
 ### 2. Green hosting check
 
-- Use the `check_green_hosting` MCP tool with the project's domain
+- Use the `check_green_hosting` MCP tool with `domain` (e.g., "example.com" — protocols and paths are stripped automatically)
 - If MCP is not available: check manually at [Green Web Foundation](https://www.thegreenwebfoundation.org/green-web-check/)
 - Look for a [carbon.txt](https://carbontxt.org/) file at the domain root
 
@@ -42,7 +42,7 @@ If a `wsg-compliance.json` file exists, use the `wsg_compliance_score` MCP tool 
 
 Pick 3-5 source files (busiest modules, largest files, entry points) and:
 
-- Use the `creedengo_check` MCP tool to scan for energy-wasteful patterns
+- Use the `creedengo_check` MCP tool with `filePath` (absolute path to source file). Supports JS/TS, PHP, Python — language is auto-detected from extension
 - If MCP is not available: manually check for:
   - Unnecessary DOM manipulation in loops
   - Missing pagination on large queries
