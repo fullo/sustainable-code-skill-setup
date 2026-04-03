@@ -1,0 +1,38 @@
+{
+  "skill_name": "gc-dev",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I'm about to commit a big refactor. Can you do a green check before I push?",
+      "expected_output": "Reviews changes for sustainability impact: bundle size, new dependencies, energy patterns, creedengo rules.",
+      "assertions": [
+        "Checks the git diff or staged changes",
+        "Evaluates impact on bundle size or resource usage",
+        "Checks for green code patterns (creedengo rules)",
+        "Provides go/no-go recommendation with specific findings"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "I'm planning a new feature that adds real-time WebSocket connections. Any sustainability concerns?",
+      "expected_output": "Analyzes energy implications of persistent connections, suggests efficiency measures.",
+      "assertions": [
+        "Identifies persistent connections as higher energy than request-response",
+        "Suggests connection pooling or heartbeat optimization",
+        "Recommends measuring SCI before and after implementation",
+        "Does not block the feature but quantifies the trade-off"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Review my last 3 commits for green coding practices",
+      "expected_output": "Examines recent commit diffs for sustainability anti-patterns and provides actionable feedback.",
+      "assertions": [
+        "Retrieves and analyzes the last 3 commits via git log and git diff",
+        "Checks for common anti-patterns (unnecessary polling, large asset additions, unoptimized images)",
+        "References creedengo or equivalent green coding rules",
+        "Summarizes findings per commit with severity indicators"
+      ]
+    }
+  ]
+}

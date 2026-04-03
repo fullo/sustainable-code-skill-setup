@@ -102,6 +102,12 @@ Estimate CO2 emissions per page view using the [Sustainable Web Design Model v4]
 - Page weights: [source]
 ```
 
+## Gotchas
+
+- **SWD model v4 estimates are order-of-magnitude**: The Sustainable Web Design model provides rough estimates (plus or minus 50%). Do not present results with false precision (e.g., "1.234g CO2" — say "~1.2g CO2" instead).
+- **First visit vs return visit matters enormously**: Cached resources can reduce transfer by 80%+. Always specify whether the estimate is for a first or return visit.
+- **Mobile vs desktop can differ by 2-3x**: Mobile devices use less energy per page load but may transfer more data due to responsive images. Specify the device context.
+
 ## Context
 
 - SWD estimates page-level emissions based on data transfer

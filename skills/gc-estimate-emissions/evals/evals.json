@@ -1,0 +1,39 @@
+{
+  "skill_name": "gc-estimate-emissions",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Estimate the CO2 emissions per page view for our landing page. It transfers about 2.5MB.",
+      "expected_output": "Applies SWD v4 model with 2.5MB transfer, reports gCO2 per page view with assumptions stated.",
+      "assertions": [
+        "Uses SWD v4 model for estimation",
+        "Takes 2.5MB as input transfer size",
+        "Reports result in gCO2 per page view",
+        "States assumptions (first visit, device type, grid intensity)"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "I have a sitemap with 50 pages. Can you estimate total emissions for 10,000 monthly visitors?",
+      "expected_output": "Estimates per-page emissions, aggregates across sitemap, scales to monthly traffic.",
+      "assertions": [
+        "Attempts to estimate or measure individual page sizes",
+        "Aggregates across the sitemap pages",
+        "Scales by monthly visitor count (10,000)",
+        "Distinguishes first visit vs return visit impact"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Compare emissions for our current 4MB page vs a redesigned 800KB version — how much CO2 do we save annually with 50k monthly visitors?",
+      "expected_output": "Calculates emissions for both versions, computes the delta, and annualizes the savings.",
+      "assertions": [
+        "Calculates emissions for the 4MB version using SWD model",
+        "Calculates emissions for the 800KB version using SWD model",
+        "Computes the per-page-view savings",
+        "Annualizes savings using 50k monthly visitors (600k annual)",
+        "Presents the comparison in a clear before/after format"
+      ]
+    }
+  ]
+}

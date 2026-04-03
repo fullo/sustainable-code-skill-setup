@@ -1,0 +1,39 @@
+{
+  "skill_name": "gc-measure-sci",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Measure the SCI for our /api/users endpoint. It's a Node.js Express app running on AWS eu-west-1.",
+      "expected_output": "Defines functional unit, gathers energy data, applies SCI formula, reports result with context.",
+      "assertions": [
+        "Defines functional unit (e.g., per API request)",
+        "Uses or references grid carbon intensity for eu-west-1 region",
+        "Applies SCI formula: SCI = ((E * I) + M) / R",
+        "Reports result in gCO2eq per functional unit"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "come misuro l'impronta carbonica di una singola pagina del mio sito React?",
+      "expected_output": "Clarifies: SCI is for operations, SWD model is for page-level. Guides to appropriate measurement.",
+      "assertions": [
+        "Distinguishes between SCI (operational) and SWD (page-level) approaches",
+        "Suggests SWD model for page-level estimation",
+        "If using SCI, defines functional unit as 'per page load'",
+        "Mentions transfer size as key input for page-level estimate"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Calculate SCI for our microservices architecture — we have 5 services on Kubernetes in Azure West Europe.",
+      "expected_output": "Breaks down SCI measurement per service, accounts for shared infrastructure, and aggregates.",
+      "assertions": [
+        "Addresses the complexity of multi-service SCI measurement",
+        "Suggests measuring per-service or per-request across the call chain",
+        "References Azure West Europe grid carbon intensity",
+        "Accounts for embodied carbon (M) of shared Kubernetes infrastructure",
+        "Recommends a functional unit that spans the service boundary (e.g., per end-user transaction)"
+      ]
+    }
+  ]
+}

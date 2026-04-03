@@ -1,0 +1,39 @@
+{
+  "skill_name": "gc-check-sustainability",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Quick sustainability check on my website at example.com",
+      "expected_output": "Checks green hosting, basic WSG compliance, page weight, and code patterns.",
+      "assertions": [
+        "Checks green hosting status for the domain",
+        "Evaluates key WSG guidelines",
+        "Reports page weight or transfer size",
+        "Identifies top sustainability improvement opportunities"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "check the sustainability of my local dev project at localhost:3000",
+      "expected_output": "Runs checks that work locally (WSG, code patterns, bundle size), skips or notes that green hosting check requires a public domain.",
+      "assertions": [
+        "Notes that green hosting check cannot run on localhost",
+        "Still runs WSG and code pattern checks",
+        "Evaluates bundle size or transfer size if possible",
+        "Does not error out due to localhost limitation"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Run a sustainability check but only focus on images and media — we know the rest is fine.",
+      "expected_output": "Narrows the check to image optimization, lazy loading, modern formats, and media-related WSG guidelines.",
+      "assertions": [
+        "Focuses on image and media sustainability checks",
+        "Checks for modern image formats (WebP, AVIF)",
+        "Verifies lazy loading is implemented for off-screen images",
+        "Evaluates image compression and responsive image usage",
+        "References relevant WSG guidelines for media optimization"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "skill_name": "gc-setup",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I have a Next.js 14 app. Run the full sustainability audit — SCI, WSG, accessibility, everything.",
+      "expected_output": "Runs 9-phase workflow: explore codebase, measure SCI, WSG compliance check, accessibility audit, performance review, testing, prioritization, baselines, CLAUDE.md update.",
+      "assertions": [
+        "Starts by exploring the codebase structure and stack",
+        "Measures or attempts to measure SCI with a defined functional unit",
+        "Checks WSG guidelines (at least a subset of the 80)",
+        "Runs or configures Lighthouse for accessibility",
+        "Produces a prioritized action list (P0-P3)"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "audit di sostenibilità per il mio progetto Python Flask — è un'API REST, niente frontend",
+      "expected_output": "Adapts the audit for a backend-only project: SCI per API call, skip WSG (no frontend), focus on server efficiency.",
+      "assertions": [
+        "Recognizes this is a backend-only project",
+        "Defines functional unit as 'per API call' or similar",
+        "Skips or adapts WSG checks (frontend-specific)",
+        "Focuses on server-side energy efficiency"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Can you just do a quick sustainability check? I don't need the full 9-phase audit, just the highlights.",
+      "expected_output": "Suggests using /gc-check-sustainability instead, or provides a condensed version focusing on the highest-impact items.",
+      "assertions": [
+        "Recognizes the user wants a lighter check",
+        "Either redirects to gc-check-sustainability or provides condensed version",
+        "Covers at minimum: green hosting, basic WSG, page weight",
+        "Does not run the full 9-phase workflow unnecessarily"
+      ]
+    }
+  ]
+}

@@ -75,6 +75,12 @@ Compute the [Software Carbon Intensity](https://sci-guide.greensoftware.foundati
      - `currentLabel`: description of current (e.g., "after tree-shaking")
    - If no baseline: record this as the initial baseline
 
+## Gotchas
+
+- **Grid carbon intensity varies by hour and region**: A fixed national average (e.g., Italy = 330 gCO2eq/kWh) is a rough proxy. Real-time intensity (via Electricity Maps or similar) can vary by 3x within a single day.
+- **Cloud provider energy data is not real-time**: AWS/Azure/GCP carbon reports are delayed by weeks or months. For current SCI calculations, use regional grid intensity as a proxy.
+- **CPU utilization is not equal to energy consumption**: The relationship between CPU load and energy is non-linear (idle power can be 30-50% of peak). Don't assume 50% CPU = 50% of max energy.
+
 ## Notes
 
 - SCI is a rate, not a total — lower is better

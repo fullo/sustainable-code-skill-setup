@@ -192,6 +192,12 @@ git diff main...HEAD
 - WSG reference: W3C Web Sustainability Guidelines 1.0
 ```
 
+## Gotchas
+
+- **Green hosting check requires DNS resolution**: The Green Web Foundation API checks the domain's IP against its database. If the domain isn't publicly resolvable (localhost, internal), the check will fail — this is expected, not an error.
+- **Creedengo rules are language-specific**: Not all green code rules apply to all languages. Check which rules exist for the project's stack before reporting missing compliance.
+- **SCI improvements below measurement noise are meaningless**: If SCI measurement variance is ±15%, a reported 5% improvement is within noise. Only report improvements that exceed measurement uncertainty.
+
 ## Related commands
 
 - `/gc-setup` — full 9-phase sustainability audit (run once at project start)

@@ -274,6 +274,13 @@ Create or update `CLAUDE.md` encoding sustainability as a core practice:
 5. **Architecture decisions** documenting WHY choices were made for sustainability
 6. **Commit conventions** that track sustainability work
 
+## Gotchas
+
+- **Lighthouse CI requires a running dev server**: You cannot run Lighthouse audits against static files directly — start the dev server first and point Lighthouse at localhost.
+- **SCI calculation needs a functional unit**: Raw energy/carbon numbers are meaningless without a functional unit (e.g., "per API call", "per page load"). Always define this before measuring.
+- **WSG 1.0 has 80 guidelines, not all are automatable**: Only ~30 of the 80 W3C Web Sustainability Guidelines can be checked programmatically. The rest require manual review — don't claim full WSG compliance from automated checks alone.
+- **Bundle size baselines drift with dependency updates**: A package-lock.json change can shift the baseline significantly. Always re-measure after dependency updates, not just code changes.
+
 ## Guiding Principles
 
 Apply these throughout:
