@@ -1,6 +1,6 @@
 # Green Coding Skills — Agent Skills + MCP Tools
 
-[![Skill Version](https://img.shields.io/badge/skill-v3.0-blue)](skills-agent/gc-setup/SKILL.md)
+[![Skill Version](https://img.shields.io/badge/skill-v3.0-blue)](skills/gc-setup/SKILL.md)
 [![MCP Tools](https://img.shields.io/badge/MCP_tools-8-green)](mcp-plugin/)
 [![CI](https://github.com/fullo/sustainable-code-skill-setup/actions/workflows/ci.yml/badge.svg)](https://github.com/fullo/sustainable-code-skill-setup/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
@@ -56,21 +56,21 @@ Clone the repository and copy the skills into your project:
 
 ```bash
 git clone https://github.com/fullo/sustainable-code-skill-setup.git ~/.gc-tools
-cp -r ~/.gc-tools/skills-agent/* .claude/skills/
+cp -r ~/.gc-tools/skills/* .claude/skills/
 ```
 
 Or install globally (available across all projects):
 
 ```bash
 git clone https://github.com/fullo/sustainable-code-skill-setup.git ~/.gc-tools
-cp -r ~/.gc-tools/skills-agent/* ~/.claude/skills/
+cp -r ~/.gc-tools/skills/* ~/.claude/skills/
 ```
 
 To update later:
 
 ```bash
 cd ~/.gc-tools && git pull
-cp -r skills-agent/* ~/.claude/skills/        # or .claude/skills/ for project-local
+cp -r skills/* ~/.claude/skills/        # or .claude/skills/ for project-local
 ```
 
 Your `.claude/skills/` directory will contain:
@@ -142,7 +142,7 @@ sustainable-code-skill-setup/
   README.md                               # This file
   CONTRIBUTING.md                         # How to contribute
   LICENSE                                 # MIT
-  skills-agent/                           # Copy this into .claude/skills/
+  skills/                           # Copy this into .claude/skills/
     gc-setup/                             # /gc-setup — full 9-phase audit
       SKILL.md
       references/                         # 8 reference files loaded on-demand

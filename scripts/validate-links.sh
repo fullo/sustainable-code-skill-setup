@@ -30,12 +30,12 @@ find . -name '*.md' -not -path './mcp-plugin/node_modules/*' -not -path './.git/
 done
 
 # Check that all reference files mentioned in gc-setup SKILL.md exist
-SKILL_FILE="skills-agent/gc-setup/SKILL.md"
+SKILL_FILE="skills/gc-setup/SKILL.md"
 if [ -f "$SKILL_FILE" ]; then
     refs=$(grep -o 'references/[a-z-]*\.md' "$SKILL_FILE" | sort -u || true)
     if [ -n "$refs" ]; then
         echo "$refs" | while IFS= read -r ref; do
-            target="skills-agent/gc-setup/$ref"
+            target="skills/gc-setup/$ref"
             if [ ! -f "$target" ]; then
                 echo "BROKEN in SKILL.md: $ref does not exist (resolved: $target)"
                 echo "1" >> "$ERRORS_FILE"
@@ -45,7 +45,7 @@ if [ -f "$SKILL_FILE" ]; then
 fi
 
 # Check that all skills have a SKILL.md
-for skill_dir in skills-agent/*/; do
+for skill_dir in skills/*/; do
     if [ ! -f "${skill_dir}SKILL.md" ]; then
         echo "MISSING: ${skill_dir}SKILL.md"
         echo "1" >> "$ERRORS_FILE"
