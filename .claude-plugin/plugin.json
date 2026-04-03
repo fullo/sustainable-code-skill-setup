@@ -1,0 +1,20 @@
+{
+  "name": "sustainable-code",
+  "version": "1.0.0",
+  "description": "Sustainable software development - SCI carbon measurement, W3C WSG 1.0 compliance, accessibility auditing, and green coding practices",
+  "author": {
+    "name": "Francesco Fullone — Daruma Consulting"
+  },
+  "repository": "https://github.com/fullo/sustainable-code-skill-setup",
+  "license": "MIT",
+  "keywords": [
+    "sustainability",
+    "green-software",
+    "SCI",
+    "WSG",
+    "carbon",
+    "accessibility",
+    "eco-design"
+  ],
+  "skills": "./skills/"
+}
