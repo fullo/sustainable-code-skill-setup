@@ -47,6 +47,9 @@ When activated, the skill guides your AI agent through a 9-phase workflow:
 | Performance | Lighthouse performance scores, bundle budgets |
 | Green patterns | [Green Software Foundation](https://patterns.greensoftware.foundation/) patterns catalog |
 | Static analysis | [Creedengo](https://github.com/green-code-initiative/creedengo-rules-specifications) green code rules |
+| iOS energy rules | [Creedengo iOS](https://github.com/green-code-initiative/creedengo-ios) Swift energy patterns |
+| Android energy | [Android Battery Optimization](https://developer.android.com/develop/background-work/background-tasks/optimize-battery) + [Android Vitals](https://developer.android.com/topic/performance/vitals) |
+| iOS energy profiling | [Xcode Instruments Energy Log](https://developer.apple.com/library/archive/documentation/Performance/Conceptual/EnergyGuide-iOS/) + [MetricKit](https://developer.apple.com/documentation/metrickit) |
 | CI energy tracking | [eco-ci-energy-estimation](https://github.com/green-coding-solutions/eco-ci-energy-estimation) for pipeline measurement |
 | Cloud carbon | [Cloud Carbon Footprint](https://www.cloudcarbonfootprint.org/) |
 
@@ -90,6 +93,10 @@ Your `.claude/skills/` directory will contain:
     SKILL.md
   gc-estimate-emissions/                # Page/sitemap emissions
     SKILL.md
+  gc-mobile-ios/                        # iOS energy audit
+    SKILL.md
+  gc-mobile-android/                    # Android energy audit
+    SKILL.md
 ```
 
 ### Step 2 (optional) — Enable MCP tools
@@ -128,14 +135,14 @@ If the agent returns a gCO2eq/kWh value, the MCP server is working correctly.
 
 | Tool | Used by | Description |
 |------|---------|-------------|
-| `sci_calculate` | `/gc-setup`, `/gc-measure-sci` | Compute SCI carbon intensity per functional unit |
+| `sci_calculate` | `/gc-setup`, `/gc-measure-sci`, `/gc-mobile-ios`, `/gc-mobile-android` | Compute SCI carbon intensity per functional unit |
 | `swd_estimate` | `/gc-setup`, `/gc-estimate-emissions` | Estimate page-level CO2 via SWD v4 model |
 | `swd_batch` | `/gc-setup`, `/gc-estimate-emissions` | Estimate emissions for multiple pages at once |
 | `check_green_hosting` | `/gc-setup`, `/gc-check-sustainability` | Check if a domain uses green hosting |
-| `grid_carbon_intensity` | `/gc-setup`, `/gc-measure-sci` | Look up grid carbon intensity by country |
+| `grid_carbon_intensity` | `/gc-setup`, `/gc-measure-sci`, `/gc-mobile-ios`, `/gc-mobile-android` | Look up grid carbon intensity by country |
 | `wsg_compliance_score` | `/gc-setup`, `/gc-check-sustainability` | Score a WSG compliance JSON file |
-| `creedengo_check` | `/gc-setup`, `/gc-check-sustainability` | Check source files against green code rules |
-| `sci_compare` | `/gc-setup`, `/gc-measure-sci` | Compare two SCI measurements |
+| `creedengo_check` | `/gc-setup`, `/gc-check-sustainability`, `/gc-mobile-ios`, `/gc-mobile-android` | Check source files against green code rules |
+| `sci_compare` | `/gc-setup`, `/gc-measure-sci`, `/gc-mobile-ios`, `/gc-mobile-android` | Compare two SCI measurements |
 
 ## File structure
 
