@@ -19,7 +19,7 @@ A collection of [Agent Skills](https://agentskills.io/) and MCP tools that audit
 | `/gc-estimate-emissions` | Estimate CO2 emissions per page view or across a sitemap |
 | `/gc-mobile-ios` | iOS green audit — energy profiling, Creedengo iOS rules, SCI measurement |
 | `/gc-mobile-android` | Android green audit — battery optimization, Creedengo Android rules, SCI measurement |
-| `/gc-verify` | Adversarial verification of any gc-* report (runs automatically after each skill) |
+| `/gc-verify` | Adversarial verification via [Chain-of-Verification (CoVe)](https://arxiv.org/abs/2309.11495) — runs automatically after each skill |
 
 ## What `/gc-setup` covers
 
@@ -53,6 +53,7 @@ When activated, the skill guides your AI agent through a 9-phase workflow:
 | iOS energy profiling | [Xcode Instruments Energy Log](https://developer.apple.com/library/archive/documentation/Performance/Conceptual/EnergyGuide-iOS/) + [MetricKit](https://developer.apple.com/documentation/metrickit) |
 | CI energy tracking | [eco-ci-energy-estimation](https://github.com/green-coding-solutions/eco-ci-energy-estimation) for pipeline measurement |
 | Cloud carbon | [Cloud Carbon Footprint](https://www.cloudcarbonfootprint.org/) |
+| Report verification | [Chain-of-Verification (CoVe)](https://arxiv.org/abs/2309.11495) — Factored + Revise variant (Dhuliawala et al., 2023) |
 
 ## Installation
 
