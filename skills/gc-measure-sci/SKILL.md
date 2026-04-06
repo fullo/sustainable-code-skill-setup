@@ -81,6 +81,10 @@ Compute the [Software Carbon Intensity](https://sci-guide.greensoftware.foundati
 - **Cloud provider energy data is not real-time**: AWS/Azure/GCP carbon reports are delayed by weeks or months. For current SCI calculations, use regional grid intensity as a proxy.
 - **CPU utilization is not equal to energy consumption**: The relationship between CPU load and energy is non-linear (idle power can be 30-50% of peak). Don't assume 50% CPU = 50% of max energy.
 
+## Post-report verification
+
+After presenting the SCI measurement report, automatically run `/gc-verify` in quick mode (checks 1-4) to validate sources, assumptions, precision, and coverage. Present the verification results immediately after the report under a `## Verification` heading.
+
 ## Notes
 
 - SCI is a rate, not a total — lower is better

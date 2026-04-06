@@ -108,6 +108,10 @@ Estimate CO2 emissions per page view using the [Sustainable Web Design Model v4]
 - **First visit vs return visit matters enormously**: Cached resources can reduce transfer by 80%+. Always specify whether the estimate is for a first or return visit.
 - **Mobile vs desktop can differ by 2-3x**: Mobile devices use less energy per page load but may transfer more data due to responsive images. Specify the device context.
 
+## Post-report verification
+
+After presenting the emissions report, automatically run `/gc-verify` in quick mode (checks 1-4) to validate sources, assumptions, precision, and coverage. Present the verification results immediately after the report under a `## Verification` heading.
+
 ## Context
 
 - SWD estimates page-level emissions based on data transfer

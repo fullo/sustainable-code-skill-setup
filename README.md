@@ -19,6 +19,7 @@ A collection of [Agent Skills](https://agentskills.io/) and MCP tools that audit
 | `/gc-estimate-emissions` | Estimate CO2 emissions per page view or across a sitemap |
 | `/gc-mobile-ios` | iOS green audit — energy profiling, Creedengo iOS rules, SCI measurement |
 | `/gc-mobile-android` | Android green audit — battery optimization, Creedengo Android rules, SCI measurement |
+| `/gc-verify` | Adversarial verification of any gc-* report (runs automatically after each skill) |
 
 ## What `/gc-setup` covers
 
@@ -97,6 +98,8 @@ Your `.claude/skills/` directory will contain:
     SKILL.md
   gc-mobile-android/                    # Android energy audit
     SKILL.md
+  gc-verify/                            # Adversarial verification
+    SKILL.md
 ```
 
 ### Step 2 (optional) — Enable MCP tools
@@ -174,6 +177,9 @@ sustainable-code-skill-setup/
       SKILL.md
       evals/evals.json
     gc-mobile-android/                    # /gc-mobile-android — Android energy audit
+      SKILL.md
+      evals/evals.json
+    gc-verify/                            # /gc-verify — adversarial verification
       SKILL.md
       evals/evals.json
   examples/                               # Walkthroughs and reference docs

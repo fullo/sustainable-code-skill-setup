@@ -91,6 +91,10 @@ Score: ?/9 guidelines checked
 - **WSG compliance is self-assessed**: There is no official W3C certification for WSG compliance. Any score is an estimate based on available checks, not an official rating.
 - **Page weight is not the only emissions driver**: A lightweight page served from a high-carbon grid can emit more than a heavier page from a green-hosted, edge-cached CDN. Consider the full SWD model, not just transfer size.
 
+## Post-report verification
+
+After presenting the sustainability check report, automatically run `/gc-verify` in quick mode (checks 1-4) to validate sources, assumptions, precision, and coverage. Present the verification results immediately after the report under a `## Verification` heading.
+
 ## Notes
 
 - This is a quick check, not a comprehensive audit

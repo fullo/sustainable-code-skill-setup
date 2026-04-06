@@ -295,3 +295,7 @@ Apply these throughout:
 8. **Track over time** — one measurement is a data point, a time series is a strategy
 9. **Design frugally** — apply Frugal UX principles: deliver more value with fewer resources (inspired by the Climate Product Leaders Playbook and Jugaad approach)
 10. **Science-based approach** — every measurement, recommendation, and report must cite the methodology used, the data sources, and their vintage. Without provenance, data is just opinion. Always include a "Methodology and sources" section in reports
+
+## Post-report verification
+
+After completing all phases and presenting the report, automatically run `/gc-verify` in quick mode (checks 1-4) to validate sources, assumptions, precision, and coverage. Present the verification results immediately after the report under a `## Verification` heading.

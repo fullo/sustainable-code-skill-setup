@@ -43,6 +43,8 @@ skills/
     SKILL.md
   gc-mobile-android/        # /gc-mobile-android — Android energy audit
     SKILL.md
+  gc-verify/                # /gc-verify — adversarial verification
+    SKILL.md
 mcp-plugin/                 # MCP server with sustainability tools
   src/tools/                # Tool implementations
   src/tools/__tests__/      # Test files (vitest)

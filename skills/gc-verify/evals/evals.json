@@ -1,0 +1,39 @@
+{
+  "skill_name": "gc-verify",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Verify the sustainability report I just generated with /gc-setup",
+      "expected_output": "Runs full 8-check adversarial verification on the most recent gc-* report in conversation.",
+      "assertions": [
+        "Checks all data points for cited sources",
+        "Challenges default assumptions (device power, carbon intensity, etc.)",
+        "Flags any false precision in reported numbers",
+        "Identifies what was NOT measured (coverage gaps)",
+        "Reports a confidence level (high/medium/low)"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Our website emits 0.5g CO2 per page view. We claim to be a sustainable website. Is this accurate?",
+      "expected_output": "Verifies the claim: checks source for 0.5g figure, challenges scope and methodology, flags 'sustainable' as unqualified claim.",
+      "assertions": [
+        "Asks for the source and methodology behind 0.5g",
+        "Flags 'sustainable website' as potential greenwashing without qualification",
+        "Checks if scope includes all system components (CDN, third-party, backend)",
+        "Compares against benchmarks for context"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "We reduced our SCI from 25 mgCO2eq to 12 mgCO2eq per API call after optimization. Can you verify this improvement?",
+      "expected_output": "Verifies both measurements: same methodology, same conditions, appropriate precision, and whether the improvement exceeds measurement noise.",
+      "assertions": [
+        "Checks if both measurements used the same methodology and conditions",
+        "Verifies the improvement exceeds measurement uncertainty",
+        "Checks if functional unit definition is consistent",
+        "Asks about what changed between measurements"
+      ]
+    }
+  ]
+}

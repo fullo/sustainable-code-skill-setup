@@ -213,6 +213,10 @@ Measure the carbon intensity of key operations:
 - **Battery percentage is not a valid energy metric**: Battery drain depends on total capacity, charge cycles, ambient temperature, and other apps. Use Xcode's energy score (0-20) or MetricKit cumulative metrics instead.
 - **Background app refresh varies by user settings**: Users can disable background refresh per-app. Don't assume your background tasks always run — and don't over-schedule as backup.
 
+## Post-report verification
+
+After presenting the iOS audit report, automatically run `/gc-verify` in quick mode (checks 1-4) to validate sources, assumptions, precision, and coverage. Present the verification results immediately after the report under a `## Verification` heading.
+
 ## Related commands
 
 - `/gc-mobile-android` — green coding audit for Android apps

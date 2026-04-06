@@ -198,6 +198,10 @@ git diff main...HEAD
 - **Creedengo rules are language-specific**: Not all green code rules apply to all languages. Check which rules exist for the project's stack before reporting missing compliance.
 - **SCI improvements below measurement noise are meaningless**: If SCI measurement variance is ±15%, a reported 5% improvement is within noise. Only report improvements that exceed measurement uncertainty.
 
+## Post-report verification
+
+After presenting the report (quick check, feature plan, or PR review), automatically run `/gc-verify` in quick mode (checks 1-4) to validate sources, assumptions, precision, and coverage. Present the verification results immediately after the report under a `## Verification` heading.
+
 ## Related commands
 
 - `/gc-setup` — full 9-phase sustainability audit (run once at project start)

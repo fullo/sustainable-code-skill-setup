@@ -249,6 +249,10 @@ For more precise measurement, use Android Studio Power Profiler data to derive a
 - **Android fragmentation affects energy**: The same code can have very different energy profiles on different devices (chipset, OS version, OEM skin). Test on representative low-end devices, not just flagships.
 - **ProGuard/R8 can change behavior**: Code shrinking may inline or remove code that affects energy patterns. Profile the release build, not just debug.
 
+## Post-report verification
+
+After presenting the Android audit report, automatically run `/gc-verify` in quick mode (checks 1-4) to validate sources, assumptions, precision, and coverage. Present the verification results immediately after the report under a `## Verification` heading.
+
 ## Related commands
 
 - `/gc-mobile-ios` — green coding audit for iOS apps
