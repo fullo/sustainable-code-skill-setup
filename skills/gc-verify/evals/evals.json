@@ -4,35 +4,37 @@
     {
       "id": 1,
       "prompt": "Verify the sustainability report I just generated with /gc-setup",
-      "expected_output": "Runs full 8-check adversarial verification on the most recent gc-* report in conversation.",
+      "expected_output": "Runs full 4-step CoVe process: extract claims, generate adversarial questions, answer each independently, produce findings with corrections.",
       "assertions": [
-        "Checks all data points for cited sources",
-        "Challenges default assumptions (device power, carbon intensity, etc.)",
-        "Flags any false precision in reported numbers",
-        "Identifies what was NOT measured (coverage gaps)",
-        "Reports a confidence level (high/medium/low)"
+        "Extracts specific verifiable claims from the report as atomic assertions",
+        "Generates adversarial questions (not friendly confirmations) per claim",
+        "Answers verification questions independently without re-reading report conclusions",
+        "Classifies findings as critical/warning/note with proposed corrections",
+        "Reports overall confidence level (high/medium/low) based on confirmed vs non-confirmed ratio"
       ]
     },
     {
       "id": 2,
       "prompt": "Our website emits 0.5g CO2 per page view. We claim to be a sustainable website. Is this accurate?",
-      "expected_output": "Verifies the claim: checks source for 0.5g figure, challenges scope and methodology, flags 'sustainable' as unqualified claim.",
+      "expected_output": "Runs CoVe: extracts 2 claims (0.5g measurement + 'sustainable' label), generates adversarial questions per claim, investigates independently.",
       "assertions": [
-        "Asks for the source and methodology behind 0.5g",
-        "Flags 'sustainable website' as potential greenwashing without qualification",
-        "Checks if scope includes all system components (CDN, third-party, backend)",
-        "Compares against benchmarks for context"
+        "Extracts '0.5g CO2 per page view' as a measurement claim and 'sustainable website' as an absolute claim",
+        "Generates source validity questions (what methodology produced 0.5g?)",
+        "Generates greenwashing questions (what qualifies 'sustainable' without quantified criteria?)",
+        "Generates scope questions (does 0.5g include third-party scripts, backend, CDN?)",
+        "Investigates each question independently before synthesizing findings"
       ]
     },
     {
       "id": 3,
       "prompt": "We reduced our SCI from 25 mgCO2eq to 12 mgCO2eq per API call after optimization. Can you verify this improvement?",
-      "expected_output": "Verifies both measurements: same methodology, same conditions, appropriate precision, and whether the improvement exceeds measurement noise.",
+      "expected_output": "Runs CoVe targeting the comparison claim: extracts both measurements, generates adversarial questions about methodology consistency, measurement noise, and precision.",
       "assertions": [
-        "Checks if both measurements used the same methodology and conditions",
-        "Verifies the improvement exceeds measurement uncertainty",
-        "Checks if functional unit definition is consistent",
-        "Asks about what changed between measurements"
+        "Generates consistency question: were both measurements taken with same methodology and conditions?",
+        "Generates precision question: does measurement uncertainty exceed the claimed improvement?",
+        "Generates counterfactual question: what if the difference is within noise?",
+        "Answers each independently by re-deriving or checking measurement conditions",
+        "Reports whether the 52% improvement exceeds measurement uncertainty"
       ]
     }
   ]

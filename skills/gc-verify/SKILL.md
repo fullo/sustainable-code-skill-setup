@@ -1,248 +1,312 @@
 ---
 name: gc-verify
 description: >-
-  Adversarial verification of sustainability reports produced by gc-* skills.
-  Challenges assumptions, checks for greenwashing, validates data sources, identifies
-  blind spots, and stress-tests recommendations. Use after any gc-* skill report,
-  or it runs automatically when triggered by other skills.
+  Adversarial verification of sustainability reports using Chain-of-Verification
+  (CoVe) methodology. Assumes errors exist, decomposes claims, generates adversarial
+  questions, and performs independent investigations to find logic flaws, silent data
+  corruption, and methodology weaknesses. Runs automatically after gc-* skills or
+  manually for deep verification.
 license: MIT
 metadata:
   author: fullo
-  version: "1.0"
+  version: "2.0"
 ---
 
-# Green Coding — Verify
+# Green Coding — Adversarial Verification
 
-Adversarial review of a sustainability report. Acts as an independent critical reviewer to ensure accuracy, completeness, and intellectual honesty.
+Operates on a philosophy of **total skepticism**: assume errors exist and drill
+down until you hit ground truth. Uses the Chain-of-Verification (CoVe)
+methodology (Dhuliawala et al., 2023) to decompose claims, generate adversarial
+questions, and perform independent investigation.
+
+> **Reference**: "Chain-of-Verification Reduces Hallucination in Large Language
+> Models" — Dhuliawala et al., 2023 (arXiv:2309.11495). The Factored + Revise
+> variant is used: each verification question is answered independently to
+> prevent bias propagation from the original report.
 
 ## When to use
 
-- **Automatic**: triggered by other gc-* skills at the end of their report
-- **Post-audit**: user runs `/gc-verify` after reviewing a report
-- **Standalone**: user provides a sustainability report or claim to verify
+- **Automatic**: triggered by other gc-* skills at the end of their report (quick mode)
+- **Post-audit**: user runs `/gc-verify` for deep adversarial review (full mode)
+- **Standalone**: user provides a claim, report, or assumption to verify
 
-## Mode: automatic
+## Core principle: total skepticism
 
-When triggered automatically by another skill, run only the **quick verification** (checks 1-4 below). Present findings inline, immediately after the original report, under a `## Verification` heading.
+Do NOT assume the report is correct. Do NOT trust numbers because they look
+precise. Do NOT accept methodology claims at face value. Every data point is
+guilty until proven innocent.
 
-## Mode: post-audit
+The most dangerous errors are not obvious mistakes — they are plausible-looking
+numbers with hidden flaws: wrong defaults applied silently, precision that
+exceeds the model's capability, scope boundaries drawn to exclude inconvenient
+truths, and recommendations that sound actionable but lack measurable outcomes.
 
-When invoked manually with `/gc-verify`, run the **full verification** (all 8 checks). Review the most recent gc-* report in the conversation.
+## CoVe process — Factored + Revise
 
-## Mode: standalone
+The verification follows 4 steps derived from the Chain-of-Verification
+framework. The critical principle is **independent execution**: each
+verification question must be answered in isolation, without access to the
+original report's conclusions, to prevent reinforcing the original errors.
 
-When invoked with `/gc-verify [claim or report]`, verify the specific claim or report provided.
+### Step 1 — Baseline claim extraction
 
-## Verification checks
+Read the report under review and extract every verifiable claim as an
+atomic assertion. A claim is any statement that can be independently
+checked: a number, a source attribution, a comparison, a recommendation,
+a scope statement, or an assumption.
 
-### 1. Source verification
+For each claim, record:
 
-For every data point cited in the report:
+```
+| # | Claim | Type | Section |
+|---|-------|------|---------|
+| 1 | "SCI = 15.2 mgCO2eq per API call" | measurement | Phase 2 |
+| 2 | "Carbon intensity: 330 gCO2eq/kWh (Italy, Ember 2023)" | data source | Phase 2 |
+| 3 | "Device power: 18W (M1 Pro)" | assumption | Phase 2 |
+| 4 | "WSG compliance: 52/80 guidelines met" | assessment | Phase 3 |
+| 5 | "Switching to system fonts saves ~200KB" | recommendation | Phase 5 |
+| ... | ... | ... | ... |
+```
 
-- Does it cite a source? Flag any unsourced numbers
-- Is the source authoritative? (peer-reviewed, official standard, government data > blog post > opinion)
-- Is the source current? Flag data older than 2 years without justification
-- Is the source used correctly? (e.g., global average carbon intensity applied to a single-region deployment)
+Claim types: `measurement`, `data source`, `assumption`, `assessment`,
+`comparison`, `recommendation`, `scope`, `methodology`.
 
-**Red flags**:
-- Numbers without sources
-- "Estimated" without explaining the estimation method
-- Using global averages when regional data is available
-- Citing a source but using a different number than what the source states
+### Step 2 — Adversarial question generation
 
-### 2. Assumption challenge
+For each extracted claim, generate one or more adversarial verification
+questions. These are NOT friendly confirmations — they are designed to
+**find the failure mode** of each claim.
 
-For every default value or assumption used:
+Question categories:
 
-| Common assumption | Challenge question |
-|-------------------|-------------------|
-| Device power (18W) | Is this appropriate for the target device? (3W phone vs 18W laptop vs 200W desktop) |
-| Carbon intensity (494 gCO2eq/kWh) | Is the deployment region known? Use regional data instead of global average |
-| Embodied carbon defaults | Does the project use dedicated or shared infrastructure? |
-| Lifetime hours | Is the assumed device/server lifetime realistic for this use case? |
-| New visitor ratio (0.75) | Does the project have analytics data? Use real data over defaults |
-| SWD model accuracy (±50%) | Are results presented with appropriate uncertainty? |
+| Category | Purpose | Example questions |
+|----------|---------|-------------------|
+| **Source validity** | Is the cited source real, current, and used correctly? | "What does Ember 2023 actually report for Italy? Is it 330 or a different value?" |
+| **Assumption appropriateness** | Is this default valid for this specific context? | "Is 18W appropriate here? What device actually runs this code?" |
+| **Precision legitimacy** | Does the methodology support this level of precision? | "SWD v4 has ±50% error — why is this reported to 4 significant figures?" |
+| **Scope completeness** | What was excluded and does that exclusion change the conclusion? | "Were third-party scripts included in page weight? They often dominate." |
+| **Consistency** | Are the same parameters used throughout? | "Phase 2 uses 330 gCO2eq/kWh but Phase 8 baseline uses 494 — why?" |
+| **Greenwashing** | Does the claim overstate the benefit? | "50% SCI reduction — but both measurements have ±50% error. Is this real?" |
+| **Reproducibility** | Could someone else get the same result? | "What Lighthouse settings were used? Throttling? Device emulation?" |
+| **Feasibility** | Is this recommendation actually achievable? | "'Quick win' to switch to system fonts — does the design system allow this?" |
+| **Counterfactual** | What if the opposite were true? | "If the actual carbon intensity is 2x higher, does the conclusion change?" |
+| **Silent corruption** | Is there a hidden error in the data pipeline? | "The SCI formula uses kWh but the input was in Wh — was the unit conversion done?" |
 
-**Red flags**:
-- Using defaults without acknowledging them as assumptions
-- Using laptop defaults for a mobile app (or vice versa)
-- Using global carbon intensity for a project deployed in a specific region
-- Assuming green hosting without verification
+Generate at least one question per claim. For high-impact claims (SCI results,
+WSG scores, key recommendations), generate 2-3 questions from different
+categories.
 
-### 3. Precision audit
+### Step 3 — Independent execution (Factored)
 
-Check that results are reported with appropriate precision for the methodology:
+**CRITICAL**: Answer each verification question independently. Do NOT look at
+the original report's conclusions while answering. Do NOT let the answer to
+one question influence another. Each question gets its own isolated
+investigation.
 
-| Model | Appropriate precision | Inappropriate |
-|-------|----------------------|---------------|
-| SWD v4 | "~1.2g CO2" or "1-2g CO2" | "1.2347g CO2" |
-| SCI (estimated) | "~15 mgCO2eq" or "10-20 mgCO2eq" | "15.234 mgCO2eq" |
-| SCI (measured with profiler) | "15.2 mgCO2eq" | Still not 6 significant figures |
-| WSG compliance | "approximately 45/80" | "56.25% compliant" (implies false precision) |
+For each question:
 
-**Red flags**:
-- More than 2 significant figures on estimated values
-- Percentage scores on self-assessed compliance
-- Comparison of numbers with different uncertainty ranges ("reduced by 12%" when both measurements have ±50% error)
+1. **Investigate independently**: look up the actual source data, re-derive
+   the calculation, check the actual file/code, or verify the real-world
+   constraint
+2. **Reach a verdict**: `confirmed` (claim is correct), `refuted` (claim is
+   wrong), `unverifiable` (cannot be independently checked), `imprecise`
+   (directionally correct but precision overstated), `incomplete` (partially
+   true but missing critical context)
+3. **Document evidence**: what did you find that supports your verdict?
 
-### 4. Coverage gap analysis
+```
+| # | Question | Verdict | Evidence |
+|---|----------|---------|----------|
+| 1a | What does Ember 2023 report for Italy? | confirmed | Ember 2023: Italy = 327 gCO2eq/kWh, report says 330 — close enough |
+| 1b | Is 15.2 mgCO2eq precision justified? | imprecise | SCI was estimated, not measured with profiler — should be "~15 mgCO2eq" |
+| 2a | Is 18W valid for this deployment? | refuted | Code runs on AWS Lambda (shared infra), not a dedicated M1 Pro laptop |
+| ... | ... | ... | ... |
+```
 
-Identify what was NOT measured or assessed:
+Verdicts that are NOT `confirmed` become findings in the final report.
 
-- **Scope gaps**: Was the full system boundary considered? (frontend only? backend only? third-party services? CDN? DNS? CI/CD pipeline?)
-- **WSG gaps**: How many of the 80 guidelines were actually checked vs marked "na"?
-- **SCI scope**: Was only one operation measured? Are the top energy consumers covered?
-- **Mobile**: Were both foreground and background energy measured?
-- **Third-party**: Were external scripts, analytics, ads, and CDN emissions counted?
-- **Rebound effects**: Could the optimization increase usage enough to offset savings?
+### Step 4 — Revise and report (Factor + Revise)
 
-**Red flags**:
-- Claiming "full sustainability audit" when only frontend was checked
-- Marking guidelines as "na" without justification
-- Ignoring third-party scripts that may dominate page weight
-- Not mentioning what was excluded from scope
+Compare the original report against all verification verdicts. For each
+non-confirmed finding:
 
-### 5. Methodology consistency
+1. **Classify severity**:
+   - `critical` — changes the conclusion or a key number by >2x
+   - `warning` — misleading but doesn't invalidate the conclusion
+   - `note` — improvement to precision or completeness, minor impact
 
-Check that the same methodology and parameters are used consistently across the report:
+2. **Propose correction**: what should the report say instead?
 
-- Same carbon intensity value used across all calculations?
-- Same functional unit definition used in all SCI measurements?
-- Same device power assumption across comparable operations?
-- WSG assessment criteria applied consistently across guidelines?
-- Same data vintage (year) for all reference data?
+3. **Assess overall confidence**: based on the ratio of confirmed vs
+   non-confirmed claims and the severity distribution:
+   - `high` — >80% confirmed, no critical findings
+   - `medium` — >60% confirmed, or critical findings that don't invalidate the whole report
+   - `low` — <60% confirmed, or multiple critical findings, or key conclusions rely on refuted claims
 
-**Red flags**:
-- Different carbon intensity values in different sections without explanation
-- Mixing SCI per-request and SCI per-session in the same comparison
-- Inconsistent severity ratings for similar issues
+## Verification dimensions
 
-### 6. Greenwashing detection
+The adversarial questions in Step 2 target these 8 dimensions. Use them as a
+checklist to ensure full coverage:
 
-Look for claims that overstate environmental benefits:
+### D1. Source verification
 
-- **Absolute claims**: "green", "sustainable", "carbon neutral", "eco-friendly" without quantification
-- **Relative claims without baseline**: "50% reduction" — from what baseline? Measured how?
-- **Selective reporting**: Showing only improving metrics, hiding worsening ones
-- **Scope manipulation**: Reducing per-unit emissions while total emissions increase (more users)
-- **Offset conflation**: Claiming green hosting offsets application-level emissions
-- **Certification inflation**: Implying W3C WSG certification (doesn't exist) from self-assessment
+- Does every number cite a source?
+- Is the source authoritative? (ISO standard > peer-reviewed > government data > blog > opinion)
+- Is the source current? Flag data >2 years old without justification
+- Is the source used correctly? (global average applied to a single-region deployment?)
 
-**Red flags**:
-- Any unqualified claim of "sustainability" or "green"
-- Improvements reported without confidence intervals
-- Missing total impact alongside per-unit metrics
-- Using "compliant" when the standard has no formal compliance mechanism
+### D2. Assumption challenge
 
-### 7. Reproducibility check
+| Common assumption | Challenge |
+|-------------------|-----------|
+| Device power (18W) | 3W phone vs 18W laptop vs 200W desktop — which is this? |
+| Carbon intensity (494 gCO2eq/kWh) | Is deployment region known? Use regional data |
+| Embodied carbon defaults | Dedicated or shared infrastructure? |
+| Lifetime hours | Realistic for this use case? |
+| New visitor ratio (0.75) | Real analytics data available? |
+| SWD accuracy (±50%) | Results presented with uncertainty? |
 
-Could another agent/team reproduce these results?
+### D3. Precision audit
 
-- Are all tools, versions, and configurations documented?
-- Are measurement conditions specified? (device, network, time of day, load)
-- Is the functional unit precisely defined?
-- Are data collection methods reproducible?
-- Is the WSG assessment criteria clear enough for independent evaluation?
+| Model | Appropriate | Inappropriate |
+|-------|------------|---------------|
+| SWD v4 | "~1.2g CO2" | "1.2347g CO2" |
+| SCI (estimated) | "~15 mgCO2eq" | "15.234 mgCO2eq" |
+| SCI (profiler) | "15.2 mgCO2eq" | 6 significant figures |
+| WSG compliance | "about 45/80" | "56.25% compliant" |
 
-**Red flags**:
-- "Measured with Lighthouse" without specifying conditions (throttling, device, network)
-- SCI measurements without specifying which operations were timed
-- WSG assessments without explaining how each guideline was evaluated
+### D4. Coverage gaps
 
-### 8. Recommendation feasibility
+- Full system boundary? (frontend, backend, third-party, CDN, DNS, CI/CD)
+- WSG: how many of 80 guidelines actually checked vs marked "na"?
+- SCI: top energy consumers all covered?
+- Mobile: foreground AND background?
+- Rebound effects considered?
 
-For each recommendation in the report:
+### D5. Methodology consistency
 
-- Is the expected impact quantified (not just "high/medium/low")?
-- Is the effort estimate realistic?
-- Are there trade-offs not mentioned? (e.g., lazy loading improves LCP but may hurt interactivity)
-- Are dependencies identified? (e.g., "switch to green hosting" requires infrastructure access)
-- Is there a way to measure success?
+- Same carbon intensity across all calculations?
+- Same functional unit in all SCI comparisons?
+- Same device power for comparable operations?
+- Same data vintage for reference data?
+- Consistent severity criteria?
 
-**Red flags**:
-- Recommendations without measurable outcomes
-- "Quick win" labels on changes that require architectural refactoring
-- Missing trade-offs (every optimization has one)
-- No mention of how to verify the improvement was achieved
+### D6. Greenwashing detection
+
+- Unqualified absolute claims ("green", "sustainable", "carbon neutral")?
+- Relative claims without baseline ("50% reduction" — from what?)?
+- Selective reporting (only improving metrics)?
+- Scope manipulation (lower per-unit but higher total)?
+- Certification inflation (implying W3C WSG certification — doesn't exist)?
+
+### D7. Reproducibility
+
+- Tools, versions, configurations documented?
+- Measurement conditions specified? (device, network, load, time)
+- Functional unit precisely defined?
+- WSG assessment criteria clear for independent evaluation?
+
+### D8. Recommendation feasibility
+
+- Impact quantified (not just "high/medium/low")?
+- Effort estimate realistic?
+- Trade-offs mentioned? (every optimization has one)
+- Dependencies identified?
+- Success measurable?
 
 ## Report format
 
-### Quick verification (automatic mode)
+### Quick verification (automatic mode — Steps 1-4 compressed)
+
+In automatic mode, run the full CoVe process but compress the output. Extract
+claims, generate questions, execute independently, then present only the
+findings:
 
 ```
-## Verification
+## Verification (CoVe)
 
-| Check | Status | Finding |
-|-------|--------|---------|
-| Sources | pass/warn/fail | [summary] |
-| Assumptions | pass/warn/fail | [summary] |
-| Precision | pass/warn/fail | [summary] |
-| Coverage | pass/warn/fail | [summary] |
+**Process**: [N] claims extracted → [M] adversarial questions → [K] findings
 
-**Confidence level**: high / medium / low
+| Dimension | Status | Finding |
+|-----------|--------|---------|
+| D1. Sources | pass/warn/fail | [summary] |
+| D2. Assumptions | pass/warn/fail | [summary] |
+| D3. Precision | pass/warn/fail | [summary] |
+| D4. Coverage | pass/warn/fail | [summary] |
+
+**Confidence**: high / medium / low — [1-2 sentence assessment]
+**Critical issues**: [count] — [list if any]
+```
+
+### Full verification (post-audit and standalone mode)
+
+```
+## Adversarial Verification (CoVe — Factored + Revise)
+
+### Process summary
+- Claims extracted: [N]
+- Adversarial questions generated: [M]
+- Independently verified: [K]
+- Findings: [X] critical, [Y] warnings, [Z] notes
+
+### Confidence: high / medium / low
 [1-2 sentence overall assessment]
-```
 
-### Full verification (post-audit mode)
+### Step 1 — Extracted claims
+| # | Claim | Type | Section |
+|---|-------|------|---------|
+| ... | ... | ... | ... |
 
-```
-## Adversarial Verification
+### Step 2 — Adversarial questions
+| # | Claim | Question | Category |
+|---|-------|----------|----------|
+| ... | ... | ... | ... |
 
-### Summary
-- **Confidence level**: high / medium / low
-- **Issues found**: ? critical, ? warnings, ? notes
-- [1-2 sentence overall assessment]
+### Step 3 — Independent verdicts
+| # | Question | Verdict | Evidence |
+|---|----------|---------|----------|
+| ... | ... | confirmed/refuted/imprecise/incomplete/unverifiable | ... |
 
-### Findings
+### Step 4 — Findings and corrections
 
-#### 1. Source verification
-| Data point | Source cited | Status | Issue |
-|------------|-------------|--------|-------|
-| ... | ... | ok/warn/fail | ... |
+#### Critical
+| # | Original claim | Issue | Correction |
+|---|----------------|-------|------------|
+| ... | ... | ... | ... |
 
-#### 2. Assumption challenge
-| Assumption | Value used | Appropriate? | Recommendation |
-|------------|-----------|--------------|----------------|
-| ... | ... | yes/no/maybe | ... |
+#### Warnings
+| # | Original claim | Issue | Correction |
+|---|----------------|-------|------------|
+| ... | ... | ... | ... |
 
-#### 3. Precision audit
-[Findings on false precision]
+#### Notes
+| # | Original claim | Issue | Correction |
+|---|----------------|-------|------------|
+| ... | ... | ... | ... |
 
-#### 4. Coverage gaps
-- Assessed: [list what was covered]
-- Not assessed: [list what was missing]
-- Justification for exclusions: [present / absent]
-
-#### 5. Methodology consistency
-[Findings on inconsistencies]
-
-#### 6. Greenwashing detection
-[Any claims that overstate benefits]
-
-#### 7. Reproducibility
-[Can results be independently reproduced?]
-
-#### 8. Recommendation feasibility
-| Recommendation | Impact quantified? | Effort realistic? | Trade-offs noted? | Measurable? |
-|----------------|-------------------|-------------------|-------------------|-------------|
-| ... | yes/no | yes/no | yes/no | yes/no |
-
-### Corrective actions
+### Corrective actions (priority order)
 1. [most critical fix]
 2. ...
 
 ### Methodology
-- Verification framework: adversarial review against 8 quality dimensions
-- Standard references: GSF SCI Spec, W3C WSG 1.0, SWD v4
-- Verification does not constitute certification or endorsement
+- Framework: Chain-of-Verification, Factored + Revise variant
+  (Dhuliawala et al., 2023 — arXiv:2309.11495)
+- Execution: each verification question answered independently to prevent
+  bias propagation from the original report
+- Dimensions: 8 adversarial dimensions (sources, assumptions, precision,
+  coverage, consistency, greenwashing, reproducibility, feasibility)
+- Reference standards: GSF SCI Spec (ISO 21031:2024), W3C WSG 1.0, SWD v4
+- This verification does not constitute certification or endorsement
 ```
 
 ## Gotchas
 
-- **Verification is not certification**: This skill checks internal consistency and methodology rigor. It does not certify compliance with any standard.
-- **False negatives are possible**: The verification cannot catch errors in the underlying data sources themselves (e.g., if Ember's carbon intensity data is wrong).
-- **Automatic mode is lightweight by design**: The quick verification (4 checks) catches the most common issues. For important reports (client-facing, published), always run the full verification.
-- **Verifier bias**: The verification itself can have blind spots. For high-stakes reports, consider external review in addition to automated verification.
+- **CoVe independent execution is the key**: If you find yourself confirming a claim by re-reading the original report, you are doing it wrong. Each verification question must be investigated from scratch, without access to the report's reasoning.
+- **Verification is not certification**: This process checks internal consistency and methodology rigor. It does not certify compliance with any standard.
+- **False negatives are possible**: CoVe cannot catch errors in the underlying data sources themselves (e.g., if Ember's carbon intensity data is wrong). It catches misuse of sources, not errors within sources.
+- **Automatic mode compresses but does not skip steps**: The quick verification still runs all 4 CoVe steps — it just presents compressed output. The thinking process must be thorough even when the output is brief.
+- **Verifier bias exists**: The verification itself can have blind spots. For high-stakes reports (client-facing, published, regulatory), complement CoVe with external human review.
+- **Counterfactual questions are the most powerful**: "What if the opposite were true?" often reveals hidden dependencies and fragile assumptions that other question types miss.
 
 ## Related commands
 

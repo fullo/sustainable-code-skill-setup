@@ -110,7 +110,7 @@ Estimate CO2 emissions per page view using the [Sustainable Web Design Model v4]
 
 ## Post-report verification
 
-After presenting the emissions report, automatically run `/gc-verify` in quick mode (checks 1-4) to validate sources, assumptions, precision, and coverage. Present the verification results immediately after the report under a `## Verification` heading.
+After presenting the emissions report, automatically run `/gc-verify` in quick mode. This triggers a Chain-of-Verification (CoVe) process: extract claims from the report, generate adversarial questions, answer each independently, and present findings under a `## Verification (CoVe)` heading.
 
 ## Context
 

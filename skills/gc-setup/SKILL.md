@@ -298,4 +298,4 @@ Apply these throughout:
 
 ## Post-report verification
 
-After completing all phases and presenting the report, automatically run `/gc-verify` in quick mode (checks 1-4) to validate sources, assumptions, precision, and coverage. Present the verification results immediately after the report under a `## Verification` heading.
+After completing all phases and presenting the report, automatically run `/gc-verify` in quick mode. This triggers a Chain-of-Verification (CoVe) process: extract claims from the report, generate adversarial questions, answer each independently, and present findings under a `## Verification (CoVe)` heading.
