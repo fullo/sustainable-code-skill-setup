@@ -1,0 +1,38 @@
+{
+  "skill_name": "gc-mobile-ios",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "My iOS app is draining battery. Can you audit it for energy issues?",
+      "expected_output": "Runs 7-phase iOS green audit: explores architecture, profiles energy, checks Creedengo iOS rules, reviews network/assets, measures SCI, produces report.",
+      "assertions": [
+        "Identifies iOS-specific energy drains (location, networking, sensors)",
+        "Checks against Creedengo iOS rules (location precision, sensor polling, idle timer)",
+        "Recommends Xcode Instruments Energy Log or MetricKit for measurement",
+        "Produces a structured report with methodology section"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Review my Swift code for green coding patterns — I want to reduce the app's carbon footprint",
+      "expected_output": "Focuses on Phase 3 (code patterns) with Creedengo iOS rules plus general Swift energy patterns.",
+      "assertions": [
+        "Scans Swift files for Creedengo iOS patterns",
+        "Checks for struct vs class preference, async/await usage, lazy loading",
+        "Does not require a full 7-phase audit for a code-only review",
+        "Cites Creedengo iOS as the source for code rules"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Measure the SCI for our app's main API call on iPhone",
+      "expected_output": "Guides through SCI measurement with iPhone-specific defaults (3W device power, 70000g embodied carbon).",
+      "assertions": [
+        "Uses iPhone-appropriate default values for devicePowerW and embodiedTotalG",
+        "Suggests ContinuousClock or CFAbsoluteTimeGetCurrent for timing",
+        "Calculates SCI via MCP tool or manual formula",
+        "Includes methodology and sources in the report"
+      ]
+    }
+  ]
+}

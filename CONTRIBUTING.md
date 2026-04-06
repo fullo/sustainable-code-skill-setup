@@ -39,6 +39,10 @@ skills/
     SKILL.md
   gc-estimate-emissions/    # /gc-estimate-emissions — page emissions
     SKILL.md
+  gc-mobile-ios/            # /gc-mobile-ios — iOS energy audit
+    SKILL.md
+  gc-mobile-android/        # /gc-mobile-android — Android energy audit
+    SKILL.md
 mcp-plugin/                 # MCP server with sustainability tools
   src/tools/                # Tool implementations
   src/tools/__tests__/      # Test files (vitest)

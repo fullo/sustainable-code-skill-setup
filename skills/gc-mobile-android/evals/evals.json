@@ -1,0 +1,38 @@
+{
+  "skill_name": "gc-mobile-android",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Audit my Android app for battery drain and energy efficiency",
+      "expected_output": "Runs 7-phase Android green audit: explores architecture, profiles energy, checks Creedengo Android rules, reviews network/assets, measures SCI, produces report.",
+      "assertions": [
+        "Identifies Android-specific energy drains (wake locks, Doze, radio state machine)",
+        "Checks against Creedengo Android rules (location, wake locks, sensors, alarms)",
+        "Recommends Battery Historian or Android Studio Power Profiler",
+        "Produces a structured report with methodology section"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Check my Kotlin code for green coding issues — we're getting Android Vitals warnings",
+      "expected_output": "Focuses on code patterns and Android Vitals: excessive wake-ups, stuck wake locks, Wi-Fi scans.",
+      "assertions": [
+        "Checks Kotlin files against Creedengo Android energy rules",
+        "Addresses Android Vitals metrics specifically",
+        "Recommends fixes for wake lock, alarm, and sensor patterns",
+        "Does not run full 7-phase audit for a code-focused request"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Il mio app Android consuma troppa batteria quando è in background, cosa posso fare?",
+      "expected_output": "Focuses on background energy: WorkManager, Doze, AlarmManager, foreground services, wake locks.",
+      "assertions": [
+        "Investigates background work patterns (Services, WorkManager, AlarmManager)",
+        "Explains Doze mode and App Standby implications",
+        "Recommends replacing AlarmManager with WorkManager where possible",
+        "Suggests testing with adb shell dumpsys deviceidle force-idle"
+      ]
+    }
+  ]
+}

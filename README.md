@@ -17,6 +17,8 @@ A collection of [Agent Skills](https://agentskills.io/) and MCP tools that audit
 | `/gc-measure-sci` | Measure SCI carbon intensity for a specific operation or endpoint |
 | `/gc-check-sustainability` | Quick sustainability check (WSG, green hosting, code patterns) |
 | `/gc-estimate-emissions` | Estimate CO2 emissions per page view or across a sitemap |
+| `/gc-mobile-ios` | iOS green audit — energy profiling, Creedengo iOS rules, SCI measurement |
+| `/gc-mobile-android` | Android green audit — battery optimization, Creedengo Android rules, SCI measurement |
 
 ## What `/gc-setup` covers
 
@@ -139,28 +141,41 @@ If the agent returns a gCO2eq/kWh value, the MCP server is working correctly.
 
 ```
 sustainable-code-skill-setup/
+  .claude-plugin/
+    plugin.json                           # Plugin manifest (agentskills.io format)
   README.md                               # This file
   CONTRIBUTING.md                         # How to contribute
   LICENSE                                 # MIT
-  skills/                           # Copy this into .claude/skills/
+  skills/                                 # Copy this into .claude/skills/
     gc-setup/                             # /gc-setup — full 9-phase audit
       SKILL.md
+      evals/evals.json                    # Skill evaluation test cases
       references/                         # 8 reference files loaded on-demand
     gc-dev/                               # /gc-dev — daily dev companion
       SKILL.md
+      evals/evals.json
     gc-measure-sci/                       # /gc-measure-sci — SCI measurement
       SKILL.md
+      evals/evals.json
     gc-check-sustainability/              # /gc-check-sustainability — quick check
       SKILL.md
+      evals/evals.json
     gc-estimate-emissions/                # /gc-estimate-emissions — page emissions
       SKILL.md
+      evals/evals.json
+    gc-mobile-ios/                        # /gc-mobile-ios — iOS energy audit
+      SKILL.md
+      evals/evals.json
+    gc-mobile-android/                    # /gc-mobile-android — Android energy audit
+      SKILL.md
+      evals/evals.json
   examples/                               # Walkthroughs and reference docs
     01-first-audit.md                     # Full /gc-setup example
     02-measure-sci.md                     # SCI measurement example
     03-page-emissions.md                  # Page emissions example
     04-daily-workflow.md                  # Daily dev workflow
-    05-mcp-tools-reference.md            # Complete MCP tools reference
-    sample-wsg-compliance.json           # Sample WSG compliance file
+    05-mcp-tools-reference.md             # Complete MCP tools reference
+    sample-wsg-compliance.json            # Sample WSG compliance file
   mcp-plugin/                             # MCP server (optional, Step 2)
     src/tools/                            # 8 tool implementations
     src/tools/__tests__/                  # Test suite (72 tests)
