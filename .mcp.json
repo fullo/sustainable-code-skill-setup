@@ -1,0 +1,6 @@
+{
+  "sustainable-code": {
+    "command": "npx",
+    "args": ["-y", "sustainable-code-mcp"]
+  }
+}
