@@ -27,7 +27,7 @@ Compute the [Software Carbon Intensity](https://sci-guide.greensoftware.foundati
 
 3. **Determine carbon intensity I** (gCO2eq/kWh):
    - Use the `grid_carbon_intensity` MCP tool with the deployment region's country code
-   - If MCP is not available: use 436 gCO2eq/kWh (2022 global average, Ember data)
+   - If MCP is not available: use 494 gCO2eq/kWh (2022 global average, Ember data)
 
 4. **Estimate embodied carbon M** (gCO2eq per operation):
    - Shared infrastructure (serverless, CDN): M is near zero per operation

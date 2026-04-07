@@ -160,7 +160,7 @@ checklist to ensure full coverage:
 | Common assumption | Challenge |
 |-------------------|-----------|
 | Device power (18W) | 3W phone vs 18W laptop vs 200W desktop — which is this? |
-| Carbon intensity (494 gCO2eq/kWh) | Is deployment region known? Use regional data |
+| Carbon intensity (332 for `sci_calculate`, 494 for `swd_estimate`) | Is deployment region known? Which default was used — CI/server (332) or global page-level (494)? Use regional data |
 | Embodied carbon defaults | Dedicated or shared infrastructure? |
 | Lifetime hours | Realistic for this use case? |
 | New visitor ratio (0.75) | Real analytics data available? |

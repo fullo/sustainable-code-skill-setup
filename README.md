@@ -107,7 +107,28 @@ Your `.claude/skills/` directory will contain:
 
 The MCP plugin gives your agent access to 8 sustainability measurement tools. This enhances the skills with real-time calculations but is not required — all skills include manual fallback instructions.
 
-If you already cloned in Step 1, just build the MCP plugin:
+**Option A — via npm (recommended)**:
+
+```bash
+npm install -g sustainable-code-mcp
+```
+
+Then add to your project's `.claude/settings.json`:
+
+```json
+{
+  "mcpServers": {
+    "sustainable-code": {
+      "command": "npx",
+      "args": ["-y", "sustainable-code-mcp"]
+    }
+  }
+}
+```
+
+> **Note:** If you installed this as a Claude Code plugin, MCP is auto-configured via `.mcp.json` — no manual setup needed.
+
+**Option B — from source** (if you cloned in Step 1):
 
 ```bash
 cd ~/.gc-tools/mcp-plugin
@@ -153,7 +174,8 @@ If the agent returns a gCO2eq/kWh value, the MCP server is working correctly.
 ```
 sustainable-code-skill-setup/
   .claude-plugin/
-    plugin.json                           # Plugin manifest (agentskills.io format)
+    plugin.json                           # Claude Code plugin manifest
+  .mcp.json                               # Auto-configures MCP server (npx)
   README.md                               # This file
   CONTRIBUTING.md                         # How to contribute
   LICENSE                                 # MIT
