@@ -57,53 +57,39 @@ When activated, the skill guides your AI agent through a 9-phase workflow:
 
 ## Installation
 
-### Step 1 — Install the skills
-
-Clone the repository and copy the skills into your project:
+### From marketplace (recommended)
 
 ```bash
-git clone https://github.com/fullo/sustainable-code-skill-setup.git ~/.gc-tools
-cp -r ~/.gc-tools/skills/* .claude/skills/
+# Add the marketplace (once)
+claude plugin marketplace add fullo/claude-plugins-marketplace
+
+# Install the plugin
+claude plugin install sustainable-code-skill-setup@fullo-plugins
 ```
 
-Or install globally (available across all projects):
+### From GitHub
+
+```bash
+git clone https://github.com/fullo/sustainable-code-skill-setup.git
+claude plugin add /path/to/sustainable-code-skill-setup
+```
+
+### As standalone Agent Skills
 
 ```bash
 git clone https://github.com/fullo/sustainable-code-skill-setup.git ~/.gc-tools
 cp -r ~/.gc-tools/skills/* ~/.claude/skills/
 ```
 
-To update later:
+## Update
 
 ```bash
-cd ~/.gc-tools && git pull
-cp -r skills/* ~/.claude/skills/        # or .claude/skills/ for project-local
+claude plugin update sustainable-code-skill-setup@fullo-plugins
 ```
 
-Your `.claude/skills/` directory will contain:
+The plugin system uses git commit hashes as versions. There is no automatic update notification: run the command above periodically to stay current.
 
-```
-.claude/skills/
-  gc-setup/                             # Full 9-phase audit
-    SKILL.md
-    references/                         # 8 reference files loaded on-demand
-  gc-measure-sci/                       # Quick SCI measurement
-    SKILL.md
-  gc-dev/                               # Daily dev companion
-    SKILL.md
-  gc-check-sustainability/              # Quick sustainability check
-    SKILL.md
-  gc-estimate-emissions/                # Page/sitemap emissions
-    SKILL.md
-  gc-mobile-ios/                        # iOS energy audit
-    SKILL.md
-  gc-mobile-android/                    # Android energy audit
-    SKILL.md
-  gc-verify/                            # Adversarial verification
-    SKILL.md
-```
-
-### Step 2 (optional) — Enable MCP tools
+### Optional — Enable MCP tools
 
 The MCP plugin gives your agent access to 8 sustainability measurement tools. This enhances the skills with real-time calculations but is not required — all skills include manual fallback instructions.
 
