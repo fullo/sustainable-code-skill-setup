@@ -22,6 +22,9 @@ const EXTENSION_MAP: Record<string, string> = {
   ".php": "php",
   ".py": "python",
   ".java": "java",
+  ".kt": "kotlin",
+  ".kts": "kotlin",
+  ".swift": "swift",
 };
 
 const JAVASCRIPT_RULES: RuleDefinition[] = [
@@ -137,10 +140,101 @@ const PYTHON_RULES: RuleDefinition[] = [
   },
 ];
 
+const SWIFT_RULES: RuleDefinition[] = [
+  {
+    rule: "GCI524",
+    pattern: /kCLLocationAccuracyBest/,
+    severity: "warning",
+    message: "Sobriety: Thrifty Geolocation — high-accuracy GPS location requested.",
+    suggestion:
+      "Use kCLLocationAccuracyReduced or kCLLocationAccuracyHundredMeters when precise location is not required. GPS drains significantly more battery.",
+  },
+  {
+    rule: "GCI513",
+    pattern: /\bstartUpdatingLocation\b/,
+    severity: "warning",
+    message: "Leakage: Location Leak — continuous location updates enabled.",
+    suggestion:
+      "Use requestLocation() for one-shot location or startMonitoringSignificantLocationChanges(). Stop updates when no longer needed to prevent location leaks.",
+  },
+  {
+    rule: "GCI534",
+    pattern: /startAccelerometerUpdates|startGyroUpdates|startDeviceMotionUpdates/,
+    severity: "warning",
+    message: "Sobriety: Motion Sensor Update Rate — continuous sensor updates enabled.",
+    suggestion:
+      "Stop sensor updates when not needed and use the lowest acceptable update frequency to save energy.",
+  },
+  {
+    rule: "GCI603",
+    pattern: /UIView\.animate|UIViewPropertyAnimator/,
+    severity: "info",
+    message: "Sobriety: Animation Free — UI animation detected.",
+    suggestion:
+      "Respect UIAccessibility.isReduceMotionEnabled and minimize animations. Animations consume GPU energy, especially when repeated or long-running.",
+  },
+  {
+    rule: "GCI522",
+    pattern: /screenBrightness\s*=|UIScreen\.main\.brightness/,
+    severity: "warning",
+    message: "Sobriety: Brightness Override — manual screen brightness change detected.",
+    suggestion:
+      "Avoid overriding screen brightness. Let the system manage brightness via auto-brightness to save energy.",
+  },
+];
+
+const KOTLIN_RULES: RuleDefinition[] = [
+  {
+    rule: "GCI508",
+    pattern: /newWakeLock|PARTIAL_WAKE_LOCK|FULL_WAKE_LOCK/,
+    severity: "warning",
+    message: "Idleness: Durable Wake Lock — WakeLock usage detected.",
+    suggestion:
+      "Ensure release() is called in a finally block and use timeout variants. WakeLocks prevent CPU sleep and drain battery rapidly.",
+  },
+  {
+    rule: "GCI517",
+    pattern: /PRIORITY_HIGH_ACCURACY/,
+    severity: "warning",
+    message: "Optimized API: Fused Location — high-accuracy location priority requested.",
+    suggestion:
+      "Use PRIORITY_BALANCED_POWER_ACCURACY or PRIORITY_LOW_POWER when precise GPS is not required. Consider FusedLocationProviderClient.",
+  },
+  {
+    rule: "GCI509",
+    pattern: /\bsetRepeating\s*\(/,
+    severity: "warning",
+    message: "Idleness: Rigid Alarm — exact repeating alarm detected.",
+    suggestion:
+      "Use setInexactRepeating() or WorkManager for periodic work. Exact alarms prevent Doze mode and drain battery.",
+  },
+  {
+    rule: "GCI521",
+    pattern: /SENSOR_DELAY_FASTEST|SENSOR_DELAY_GAME/,
+    severity: "info",
+    message: "Sobriety: Thrifty Motion Sensor — high-frequency sensor polling detected.",
+    suggestion:
+      "Use SENSOR_DELAY_NORMAL or SENSOR_DELAY_UI unless high frequency is required. Faster polling consumes more energy.",
+  },
+  {
+    rule: "GCI505",
+    pattern: /FLAG_KEEP_SCREEN_ON|addFlags.*KEEP_SCREEN_ON|setKeepScreenOn/,
+    severity: "warning",
+    message: "Idleness: Keep Screen On — screen kept awake programmatically.",
+    suggestion:
+      "Remove FLAG_KEEP_SCREEN_ON when no longer needed. Keeping the screen on is one of the highest battery drains.",
+  },
+];
+
+const JAVA_RULES: RuleDefinition[] = KOTLIN_RULES;
+
 const RULES_BY_LANGUAGE: Record<string, RuleDefinition[]> = {
   javascript: JAVASCRIPT_RULES,
   php: PHP_RULES,
   python: PYTHON_RULES,
+  swift: SWIFT_RULES,
+  kotlin: KOTLIN_RULES,
+  java: JAVA_RULES,
 };
 
 /**

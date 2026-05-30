@@ -175,6 +175,122 @@ describe("checkCreedengo", () => {
     expect(result.language).toBe("python");
   });
 
+  // --- Swift rules (official Creedengo IDs) ---
+
+  it("detects high-accuracy GPS in Swift (GCI524)", async () => {
+    const filePath = await writeTempFile(
+      "test.swift",
+      "locationManager.desiredAccuracy = kCLLocationAccuracyBest\n"
+    );
+    const result = await checkCreedengo(filePath);
+
+    expect(result.language).toBe("swift");
+    const rule = result.issues.find((i) => i.rule === "GCI524");
+    expect(rule).toBeDefined();
+    expect(rule!.line).toBe(1);
+  });
+
+  it("detects continuous location updates in Swift (GCI513)", async () => {
+    const filePath = await writeTempFile(
+      "test2.swift",
+      "locationManager.startUpdatingLocation()\n"
+    );
+    const result = await checkCreedengo(filePath);
+
+    const rule = result.issues.find((i) => i.rule === "GCI513");
+    expect(rule).toBeDefined();
+  });
+
+  it("detects brightness override in Swift (GCI522)", async () => {
+    const filePath = await writeTempFile(
+      "test3.swift",
+      "UIScreen.main.brightness = 1.0\n"
+    );
+    const result = await checkCreedengo(filePath);
+
+    const rule = result.issues.find((i) => i.rule === "GCI522");
+    expect(rule).toBeDefined();
+  });
+
+  it("auto-detects language from .swift extension", async () => {
+    const filePath = await writeTempFile("detect.swift", "let x = 1\n");
+    const result = await checkCreedengo(filePath);
+    expect(result.language).toBe("swift");
+  });
+
+  // --- Kotlin rules (official Creedengo IDs) ---
+
+  it("detects WakeLock in Kotlin (GCI508)", async () => {
+    const filePath = await writeTempFile(
+      "test.kt",
+      "val wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, tag)\n"
+    );
+    const result = await checkCreedengo(filePath);
+
+    expect(result.language).toBe("kotlin");
+    const rule = result.issues.find((i) => i.rule === "GCI508");
+    expect(rule).toBeDefined();
+  });
+
+  it("detects high-accuracy location in Kotlin (GCI517)", async () => {
+    const filePath = await writeTempFile(
+      "test2.kt",
+      "val request = LocationRequest.create().setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)\n"
+    );
+    const result = await checkCreedengo(filePath);
+
+    const rule = result.issues.find((i) => i.rule === "GCI517");
+    expect(rule).toBeDefined();
+  });
+
+  it("detects exact repeating alarm in Kotlin (GCI509)", async () => {
+    const filePath = await writeTempFile(
+      "test3.kt",
+      "alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, start, interval, pending)\n"
+    );
+    const result = await checkCreedengo(filePath);
+
+    const rule = result.issues.find((i) => i.rule === "GCI509");
+    expect(rule).toBeDefined();
+  });
+
+  it("detects keep screen on in Kotlin (GCI505)", async () => {
+    const filePath = await writeTempFile(
+      "test4.kt",
+      "window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)\n"
+    );
+    const result = await checkCreedengo(filePath);
+
+    const rule = result.issues.find((i) => i.rule === "GCI505");
+    expect(rule).toBeDefined();
+  });
+
+  it("auto-detects language from .kt extension", async () => {
+    const filePath = await writeTempFile("detect.kt", "val x = 1\n");
+    const result = await checkCreedengo(filePath);
+    expect(result.language).toBe("kotlin");
+  });
+
+  // --- Java rules (shares Android rules) ---
+
+  it("detects WakeLock in Java (GCI508)", async () => {
+    const filePath = await writeTempFile(
+      "Test.java",
+      "WakeLock wakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, tag);\n"
+    );
+    const result = await checkCreedengo(filePath);
+
+    expect(result.language).toBe("java");
+    const rule = result.issues.find((i) => i.rule === "GCI508");
+    expect(rule).toBeDefined();
+  });
+
+  it("auto-detects language from .java extension", async () => {
+    const filePath = await writeTempFile("Detect.java", "int x = 1;\n");
+    const result = await checkCreedengo(filePath);
+    expect(result.language).toBe("java");
+  });
+
   // --- Error handling ---
 
   it("throws for file not found", async () => {

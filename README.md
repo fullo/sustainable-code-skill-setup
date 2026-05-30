@@ -150,10 +150,10 @@ If the agent returns a gCO2eq/kWh value, the MCP server is working correctly.
 | `sci_calculate` | `/gc-setup`, `/gc-measure-sci`, `/gc-mobile-ios`, `/gc-mobile-android` | Compute SCI carbon intensity per functional unit |
 | `swd_estimate` | `/gc-setup`, `/gc-estimate-emissions` | Estimate page-level CO2 via SWD v4 model |
 | `swd_batch` | `/gc-setup`, `/gc-estimate-emissions` | Estimate emissions for multiple pages at once |
-| `check_green_hosting` | `/gc-setup`, `/gc-check-sustainability` | Check if a domain uses green hosting |
-| `grid_carbon_intensity` | `/gc-setup`, `/gc-measure-sci`, `/gc-mobile-ios`, `/gc-mobile-android` | Look up grid carbon intensity by country |
+| `check_green_hosting` | `/gc-setup`, `/gc-check-sustainability`, `/gc-estimate-emissions` | Check if a domain uses green hosting |
+| `grid_carbon_intensity` | `/gc-setup`, `/gc-measure-sci`, `/gc-mobile-ios`, `/gc-mobile-android` | Look up grid carbon intensity by country (16 countries, Ember 2022) |
 | `wsg_compliance_score` | `/gc-setup`, `/gc-check-sustainability` | Score a WSG compliance JSON file |
-| `creedengo_check` | `/gc-setup`, `/gc-check-sustainability`, `/gc-mobile-ios`, `/gc-mobile-android` | Check source files against green code rules |
+| `creedengo_check` | `/gc-setup`, `/gc-dev`, `/gc-check-sustainability`, `/gc-mobile-ios`, `/gc-mobile-android` | Check source files against green code rules |
 | `sci_compare` | `/gc-setup`, `/gc-measure-sci`, `/gc-mobile-ios`, `/gc-mobile-android` | Compare two SCI measurements |
 
 ### Optional companion MCP — Website Specification
