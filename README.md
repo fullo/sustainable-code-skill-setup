@@ -1,6 +1,6 @@
 # Green Coding Skills — Agent Skills + MCP Tools
 
-[![Skill Version](https://img.shields.io/badge/skill-v3.0-blue)](skills/gc-setup/SKILL.md)
+[![Skill Version](https://img.shields.io/badge/skill-v3.1-blue)](skills/gc-setup/SKILL.md)
 [![MCP Tools](https://img.shields.io/badge/MCP_tools-8-green)](mcp-plugin/)
 [![CI](https://github.com/fullo/sustainable-code-skill-setup/actions/workflows/ci.yml/badge.svg)](https://github.com/fullo/sustainable-code-skill-setup/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)

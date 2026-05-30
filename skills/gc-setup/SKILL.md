@@ -11,7 +11,7 @@ description: >-
 license: MIT
 metadata:
   author: fullo
-  version: "3.0"
+  version: "3.1"
 ---
 
 # Green Coding Setup
