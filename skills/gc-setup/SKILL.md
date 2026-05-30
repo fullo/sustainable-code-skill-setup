@@ -202,6 +202,7 @@ Deliverables:
 4. If web fonts are used, evaluate switching to system font stack (zero network cost)
 5. Reference the [Green Software Patterns](references/green-patterns.md) catalog for optimization recommendations mapped to each audit phase
 6. For cloud/K8s deployments: consider [Kepler](https://github.com/sustainable-computing-io/kepler) for container-level energy monitoring using eBPF and hardware counters
+7. For public-facing sites, cross-check the sustainability-adjacent items in [references/specification-website.md](references/specification-website.md) (performance, resilience, agent-readiness). Treat it as a complement — WSG and Green Patterns remain authoritative. In particular, flag blanket prefetch/prerender (Speculation Rules), which can *increase* transfer, and recommend `/llms.txt` + Markdown endpoints to cut agent-traffic emissions
 
 ## Phase 6 — Testing & Quality
 

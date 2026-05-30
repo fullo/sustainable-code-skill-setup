@@ -85,6 +85,15 @@ Score: ?/9 guidelines checked
 - carbon.txt: [carbontxt.org](https://carbontxt.org/) standard
 ```
 
+### 4b. Cheap wins (optional, public sites only)
+
+Two no-measurement checks adapted from [The Website Specification](https://specification.website/) that reduce agent-traffic and retry waste:
+
+- **`/llms.txt` + Markdown endpoints** — does the site expose a curated Markdown index? Agents reading Markdown instead of rendered HTML+JS transfer a fraction of the bytes.
+- **Correct error status codes** — do 404/500 pages return the right HTTP status (not a 200 with an error body)? A soft-404 makes crawlers retry indefinitely.
+
+These complement the green checks above; they do not change the WSG score.
+
 ## Gotchas
 
 - **Green hosting databases are incomplete**: The Green Web Foundation dataset doesn't cover all hosting providers. A "not green" result may mean "not in the database" rather than "definitely not green."

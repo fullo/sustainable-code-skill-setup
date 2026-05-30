@@ -54,6 +54,7 @@ When activated, the skill guides your AI agent through a 9-phase workflow:
 | CI energy tracking | [eco-ci-energy-estimation](https://github.com/green-coding-solutions/eco-ci-energy-estimation) for pipeline measurement |
 | Cloud carbon | [Cloud Carbon Footprint](https://www.cloudcarbonfootprint.org/) |
 | Report verification | [Chain-of-Verification (CoVe)](https://arxiv.org/abs/2309.11495) — Factored + Revise variant (Dhuliawala et al., 2023) |
+| Web best-practices (complement) | [The Website Specification](https://specification.website/) — environmental subset (performance, resilience, agent-readiness, privacy) + security as a separate governance dimension. Complement only; WSG and Green Patterns remain authoritative, and security never feeds the environmental score |
 
 ## Installation
 
@@ -155,6 +156,25 @@ If the agent returns a gCO2eq/kWh value, the MCP server is working correctly.
 | `creedengo_check` | `/gc-setup`, `/gc-check-sustainability`, `/gc-mobile-ios`, `/gc-mobile-android` | Check source files against green code rules |
 | `sci_compare` | `/gc-setup`, `/gc-measure-sci`, `/gc-mobile-ios`, `/gc-mobile-android` | Compare two SCI measurements |
 
+### Optional companion MCP — Website Specification
+
+[The Website Specification](https://specification.website/) publishes a **remote MCP server** that exposes its best-practice catalog as searchable lookup tools. It is a *reference* server (it answers "what's the best practice for X"), not a *measurement* server — so it complements the 8 calculation tools above rather than replacing any. The skills use the curated sustainability-adjacent subset in [`references/specification-website.md`](skills/gc-setup/references/specification-website.md); enabling the MCP is only useful if you also want interactive lookups of the full 13-area spec.
+
+To enable it, add to your project's `.claude/settings.json`:
+
+```json
+{
+  "mcpServers": {
+    "website-spec": {
+      "type": "http",
+      "url": "https://mcp.specification.website/mcp"
+    }
+  }
+}
+```
+
+> **Note:** this is a third-party network dependency. It does not feed `/gc-verify` (which only verifies measurable claims) and is not required by any skill — all green checks work without it.
+
 ## File structure
 
 ```
@@ -169,7 +189,7 @@ sustainable-code-skill-setup/
     gc-setup/                             # /gc-setup — full 9-phase audit
       SKILL.md
       evals/evals.json                    # Skill evaluation test cases
-      references/                         # 8 reference files loaded on-demand
+      references/                         # 9 reference files loaded on-demand
     gc-dev/                               # /gc-dev — daily dev companion
       SKILL.md
       evals/evals.json
