@@ -34,6 +34,17 @@
         "Annualizes savings using 50k monthly visitors (600k annual)",
         "Presents the comparison in a clear before/after format"
       ]
+    },
+    {
+      "id": 4,
+      "prompt": "Estimate the emissions of our homepage, and make sure the numbers are defensible.",
+      "expected_output": "Estimates with SWD v4 and documents boundaries, assumptions, and data sources to align with SCI for Web disclosure principles.",
+      "assertions": [
+        "Uses the SWD v4 model for the page-level estimate",
+        "States assumptions, data sources, and boundaries explicitly",
+        "Mentions SCI for Web as the emerging standard SWD complements",
+        "Includes third-party resources (analytics, ads, CDNs) in the boundary discussion"
+      ]
     }
   ]
 }

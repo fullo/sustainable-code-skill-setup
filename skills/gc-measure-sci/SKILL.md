@@ -8,16 +8,32 @@ description: >-
 license: MIT
 metadata:
   author: fullo
-  version: "1.0"
+  version: "1.1"
 ---
 
 # Measure SCI
 
 Compute the [Software Carbon Intensity](https://sci-guide.greensoftware.foundation/) for $ARGUMENTS.
 
+## Pick the right SCI profile
+
+SCI is now **ISO/IEC 21031:2024**, with two domain profiles on the same formula.
+Choose before you measure:
+
+- **Generic operation** (API request, file processed, job) → standard SCI, steps below.
+- **AI training or inference** → **SCI for AI** (`SCI = C / R`). State whether it is
+  a **Provider** score (training/development) or a **Consumer** score
+  (inference/operation) and pick a matching functional unit (per token, per image,
+  per inference, per workflow). See [gsf-projects.md](../gc-setup/references/gsf-projects.md#sci-for-ai).
+- **Web application** → estimate with SWD v4 today (`/gc-estimate-emissions`), and
+  structure boundaries + disclosure to align with the emerging **SCI for Web**.
+- **Kubernetes / cloud fleet** → measure with **Carmen** (carbon) or **Kepler**
+  (energy) instead of per-operation profiling; see
+  [gsf-projects.md](../gc-setup/references/gsf-projects.md#measurement-engines-for-cloud--kubernetes).
+
 ## Steps
 
-1. **Identify the functional unit R** — what counts as "one operation"? (API request, page load, file processed, user session, CI run, etc.)
+1. **Identify the functional unit R** — what counts as "one operation"? (API request, page load, file processed, user session, inference, CI run, etc.)
 
 2. **Measure energy E** (kWh per operation):
    - **JS/TS projects**: integrate [SCI Profiler](https://github.com/fullo/sci-profiler) — uses `performance.now()` to estimate energy per operation
@@ -60,7 +76,7 @@ Compute the [Software Carbon Intensity](https://sci-guide.greensoftware.foundati
 - [concrete actions to reduce SCI]
 
 ### Methodology and sources
-- Formula: SCI = ((E x I) + M) / R — [Green Software Foundation SCI Specification v1.0](https://sci-guide.greensoftware.foundation/)
+- Formula: SCI = ((E x I) + M) / R — [Green Software Foundation SCI Specification](https://sci-guide.greensoftware.foundation/) (ISO/IEC 21031:2024)
 - Grid carbon intensity: [value] gCO2eq/kWh — [Ember Global Electricity Review](https://ember-energy.org/) [year]
 - Device power: [value] W — [source]
 - Embodied carbon: [value] gCO2eq — [source]
@@ -77,7 +93,7 @@ Compute the [Software Carbon Intensity](https://sci-guide.greensoftware.foundati
 
 ## Gotchas
 
-- **Grid carbon intensity varies by hour and region**: A fixed national average (e.g., Italy = 330 gCO2eq/kWh) is a rough proxy. Real-time intensity (via Electricity Maps or similar) can vary by 3x within a single day.
+- **Grid carbon intensity varies by hour and region**: A fixed national average (e.g., Italy = 371 gCO2eq/kWh, Ember 2022) is a rough proxy. Real-time intensity (via Electricity Maps or similar) can vary by 3x within a single day.
 - **Cloud provider energy data is not real-time**: AWS/Azure/GCP carbon reports are delayed by weeks or months. For current SCI calculations, use regional grid intensity as a proxy.
 - **CPU utilization is not equal to energy consumption**: The relationship between CPU load and energy is non-linear (idle power can be 30-50% of peak). Don't assume 50% CPU = 50% of max energy.
 

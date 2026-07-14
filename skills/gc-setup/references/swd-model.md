@@ -4,6 +4,13 @@ The SWD model provides a top-down method for estimating the carbon emissions of
 a web page view based on data transfer. It complements the bottom-up SCI
 approach by offering quick estimation without per-operation profiling.
 
+> **SCI for Web (2026):** GSF + W3C are standardizing an SCI profile for the web
+> that formalizes boundaries (servers, networks, third parties, end-user devices)
+> and mandates disclosure of assumptions and data sources. SWD v4 remains the
+> practical estimator today and is explicitly complementary — record boundaries
+> and sources so results align with SCI for Web later. See
+> [gsf-projects.md](gsf-projects.md#sci-for-web).
+
 ## Core Formula
 
 ```

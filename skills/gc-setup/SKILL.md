@@ -11,7 +11,7 @@ description: >-
 license: MIT
 metadata:
   author: fullo
-  version: "3.0"
+  version: "3.2"
 ---
 
 # Green Coding Setup
@@ -84,11 +84,21 @@ Read the codebase thoroughly. Understand:
 
 ## Phase 2 — Energy & Carbon (SCI)
 
-Evaluate against the Green Software Foundation SCI formula:
+Evaluate against the Green Software Foundation SCI formula (now **ISO/IEC 21031:2024**):
 
 ```
 SCI = ((E x I) + M) / R
 ```
+
+Pick the right SCI profile for the workload — all share this formula:
+- **AI training/inference** → use **SCI for AI** (Provider vs Consumer score;
+  functional unit per token/image/inference/workflow).
+- **Web application** → estimate with SWD v4 (step 5) and structure it to align
+  with the emerging **SCI for Web** (explicit boundaries + disclosure).
+- **Kubernetes / cloud fleet** → measure with **Carmen** (carbon) or **Kepler**
+  (energy) rather than per-operation profiling.
+
+See [references/gsf-projects.md](references/gsf-projects.md) for scoring rules and tool selection.
 
 | Variable | What to assess |
 |----------|---------------|
@@ -105,6 +115,7 @@ Deliverables:
    - **Any JS/TS project** (browser, Node.js, Deno, Bun): integrate the [SCI Profiler](https://github.com/fullo/sci-profiler) — zero-dependency, framework-agnostic TypeScript library that uses `performance.now()` to compute SCI per operation. Recommended for all projects where `performance.now()` is available.
    - **PHP projects** (Laravel, Symfony, WordPress, Drupal, vanilla PHP): integrate [sci-profiler-php](https://github.com/fullo/sci-profiler-php) — zero-code-changes profiler using `auto_prepend_file`. See [references/sci-guide.md](references/sci-guide.md) for setup.
    - **Other server-side** (Python, Go, Java, etc.): per-request CPU time tracking or [Cloud Carbon Footprint](https://www.cloudcarbonfootprint.org/)
+   - **Kubernetes / cloud workloads**: [Carmen](https://github.com/Green-Software-Foundation/if-carmen) for per-workload carbon (Impact Framework + Prometheus) or [Kepler](https://sustainable-computing.io/) for container/pod energy. See [references/gsf-projects.md](references/gsf-projects.md#measurement-engines-for-cloud--kubernetes)
    - **CLI tools**: wall-clock benchmarks with `hyperfine` or equivalent
 4. If possible, create an initial SCI benchmark for the top 5 operations
 5. **Web projects (page-level estimation)**: use the Sustainable Web Design Model v4 for quick top-down estimation of emissions per page view based on page weight. See [references/swd-model.md](references/swd-model.md). Use alongside SCI for a complete picture (SWD for page-level, SCI for operation-level).
@@ -113,7 +124,7 @@ At the end of Phase 2, include a methodology section:
 
 ```
 ### Methodology and sources
-- Formula: SCI = ((E x I) + M) / R — Green Software Foundation SCI Specification v1.0
+- Formula: SCI = ((E x I) + M) / R — Green Software Foundation SCI Specification (ISO/IEC 21031:2024)
 - Grid carbon intensity: [value] gCO2eq/kWh — Ember Global Electricity Review [year]
 - Device power: [value] W — [source, e.g., Apple M1 Pro TDP, Intel TDP spec]
 - Embodied carbon: [value] gCO2eq — [source, e.g., Apple Product Environmental Report]
@@ -202,6 +213,7 @@ Deliverables:
 4. If web fonts are used, evaluate switching to system font stack (zero network cost)
 5. Reference the [Green Software Patterns](references/green-patterns.md) catalog for optimization recommendations mapped to each audit phase
 6. For cloud/K8s deployments: consider [Kepler](https://github.com/sustainable-computing-io/kepler) for container-level energy monitoring using eBPF and hardware counters
+7. For public-facing sites, cross-check the sustainability-adjacent items in [references/specification-website.md](references/specification-website.md) (performance, resilience, agent-readiness). Treat it as a complement — WSG and Green Patterns remain authoritative. In particular, flag blanket prefetch/prerender (Speculation Rules), which can *increase* transfer, and recommend `/llms.txt` + Markdown endpoints to cut agent-traffic emissions
 
 ## Phase 6 — Testing & Quality
 

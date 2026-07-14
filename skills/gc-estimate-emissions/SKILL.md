@@ -7,12 +7,21 @@ description: >-
 license: MIT
 metadata:
   author: fullo
-  version: "1.0"
+  version: "1.1"
 ---
 
 # Estimate Emissions
 
 Estimate CO2 emissions per page view using the [Sustainable Web Design Model v4](https://sustainablewebdesign.org/estimating-digital-emissions/) for $ARGUMENTS.
+
+> **Heads-up — SCI for Web (2026).** The GSF and W3C are developing
+> [SCI for Web](https://greensoftware.foundation/standards/sci-web/) (Q1 2026), an
+> SCI profile that attributes web emissions across servers, networks, third
+> parties, and end-user devices, with **mandatory disclosure** of boundaries and
+> data sources. It complements SWD v4 rather than replacing it. Keep using SWD
+> here, but always state your assumptions, data sources, and boundaries in the
+> report so results map cleanly onto SCI for Web when it ratifies. See
+> [gsf-projects.md](../gc-setup/references/gsf-projects.md#sci-for-web).
 
 ## Steps
 

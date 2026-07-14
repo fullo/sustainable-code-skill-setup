@@ -197,7 +197,7 @@ server.tool(
   "grid_carbon_intensity",
   "Look up the grid carbon intensity (gCO2eq/kWh) for a country or region. " +
     "Uses data from the Ember Global Electricity Review 2022. " +
-    "Use country code 'GLOBAL' for the world average.",
+    "Supports 16 countries: FR, SE, NO, GB, DE, US, CN, IN, BR, JP, AU, CA, IT, ES, KR, and 'GLOBAL' for the world average.",
   {
     countryCode: z
       .string()
@@ -270,8 +270,8 @@ server.tool(
   "creedengo_check",
   "Check a source file against Creedengo-style green coding rules. " +
     "Detects anti-patterns that waste energy (e.g., setInterval, SELECT *, " +
-    "wildcard imports) and suggests greener alternatives. " +
-    "Supports JavaScript/TypeScript, PHP, and Python.",
+    "wildcard imports, WakeLocks, high-accuracy GPS) and suggests greener alternatives. " +
+    "Supports JavaScript/TypeScript, PHP, Python, Swift, Kotlin, and Java.",
   {
     filePath: z
       .string()
@@ -281,7 +281,7 @@ server.tool(
       .string()
       .optional()
       .describe(
-        "Language override (javascript, php, python, java). Auto-detected from extension if omitted."
+        "Language override (javascript, php, python, java, kotlin, swift). Auto-detected from extension if omitted."
       ),
   },
   async (params) => {

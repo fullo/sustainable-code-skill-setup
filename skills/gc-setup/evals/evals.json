@@ -34,6 +34,17 @@
         "Covers at minimum: green hosting, basic WSG, page weight",
         "Does not run the full 9-phase workflow unnecessarily"
       ]
+    },
+    {
+      "id": 4,
+      "prompt": "Run a green audit on our platform — it's a React web app plus an AI recommendation service running on Kubernetes.",
+      "expected_output": "Selects the right SCI profile per component: SCI for AI for the recommender, SWD/SCI for Web for the frontend, Carmen/Kepler for the K8s workloads.",
+      "assertions": [
+        "Applies SCI for AI (Consumer score) to the AI recommendation service",
+        "Uses SWD v4 for page-level web estimation and references SCI for Web alignment",
+        "Recommends Carmen or Kepler for per-workload Kubernetes measurement",
+        "References ISO/IEC 21031:2024 as the parent SCI standard"
+      ]
     }
   ]
 }

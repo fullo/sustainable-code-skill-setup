@@ -1,6 +1,6 @@
 # Green Coding Skills — Agent Skills + MCP Tools
 
-[![Skill Version](https://img.shields.io/badge/skill-v3.0-blue)](skills/gc-setup/SKILL.md)
+[![Skill Version](https://img.shields.io/badge/skill-v3.2-blue)](skills/gc-setup/SKILL.md)
 [![MCP Tools](https://img.shields.io/badge/MCP_tools-8-green)](mcp-plugin/)
 [![CI](https://github.com/fullo/sustainable-code-skill-setup/actions/workflows/ci.yml/badge.svg)](https://github.com/fullo/sustainable-code-skill-setup/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
@@ -39,11 +39,14 @@ When activated, the skill guides your AI agent through a 9-phase workflow:
 
 | Area | Standard / Tool |
 |------|----------------|
-| Carbon measurement | [SCI (Software Carbon Intensity)](https://sci-guide.greensoftware.foundation/) |
+| Carbon measurement | [SCI (Software Carbon Intensity)](https://sci-guide.greensoftware.foundation/) — now [ISO/IEC 21031:2024](https://sci.greensoftware.foundation/) |
+| AI carbon | [SCI for AI](https://greensoftware.foundation/standards/sci-ai/) — ratified Dec 2025 (Provider vs Consumer scores) |
+| Web carbon | [SCI for Web](https://greensoftware.foundation/standards/sci-web/) — GSF × W3C, in development (Q1 2026) |
 | SCI profiling (JS/TS) | [SCI Profiler](https://github.com/fullo/sci-profiler) — zero-dependency TypeScript library |
 | SCI profiling (PHP) | [SCI Profiler PHP](https://github.com/fullo/sci-profiler-php) — zero-code-changes, framework-agnostic |
+| Cloud / K8s carbon | [Carmen](https://github.com/Green-Software-Foundation/if-carmen) (carbon, Impact Framework) · [Kepler](https://sustainable-computing.io/) (energy, CNCF) |
 | Page emissions | [Sustainable Web Design (SWD) v4](https://sustainablewebdesign.org/estimating-digital-emissions/) model |
-| Web sustainability | [W3C WSG 1.0](https://www.w3.org/TR/web-sustainability-guidelines/) (80 guidelines) |
+| Web sustainability | [W3C WSG](https://www.w3.org/TR/web-sustainability-guidelines/) (80 guidelines, → W3C Statement by Earth Day 2026) |
 | Accessibility | [WCAG 2.1 AA](https://www.w3.org/TR/WCAG21/) via [Lighthouse CI](https://github.com/GoogleChrome/lighthouse-ci) |
 | Performance | Lighthouse performance scores, bundle budgets |
 | Green patterns | [Green Software Foundation](https://patterns.greensoftware.foundation/) patterns catalog |
@@ -54,56 +57,43 @@ When activated, the skill guides your AI agent through a 9-phase workflow:
 | CI energy tracking | [eco-ci-energy-estimation](https://github.com/green-coding-solutions/eco-ci-energy-estimation) for pipeline measurement |
 | Cloud carbon | [Cloud Carbon Footprint](https://www.cloudcarbonfootprint.org/) |
 | Report verification | [Chain-of-Verification (CoVe)](https://arxiv.org/abs/2309.11495) — Factored + Revise variant (Dhuliawala et al., 2023) |
+| Web best-practices (complement) | [The Website Specification](https://specification.website/) — environmental subset (performance, resilience, agent-readiness, privacy) + security as a separate governance dimension. Complement only; WSG and Green Patterns remain authoritative, and security never feeds the environmental score |
 
 ## Installation
 
-### Step 1 — Install the skills
-
-Clone the repository and copy the skills into your project:
+### From marketplace (recommended)
 
 ```bash
-git clone https://github.com/fullo/sustainable-code-skill-setup.git ~/.gc-tools
-cp -r ~/.gc-tools/skills/* .claude/skills/
+# Add the marketplace (once)
+claude plugin marketplace add fullo/claude-plugins-marketplace
+
+# Install the plugin
+claude plugin install sustainable-code-skill-setup@fullo-plugins
 ```
 
-Or install globally (available across all projects):
+### From GitHub
+
+```bash
+git clone https://github.com/fullo/sustainable-code-skill-setup.git
+claude plugin add /path/to/sustainable-code-skill-setup
+```
+
+### As standalone Agent Skills
 
 ```bash
 git clone https://github.com/fullo/sustainable-code-skill-setup.git ~/.gc-tools
 cp -r ~/.gc-tools/skills/* ~/.claude/skills/
 ```
 
-To update later:
+## Update
 
 ```bash
-cd ~/.gc-tools && git pull
-cp -r skills/* ~/.claude/skills/        # or .claude/skills/ for project-local
+claude plugin update sustainable-code-skill-setup@fullo-plugins
 ```
 
-Your `.claude/skills/` directory will contain:
+The plugin system uses git commit hashes as versions. There is no automatic update notification: run the command above periodically to stay current.
 
-```
-.claude/skills/
-  gc-setup/                             # Full 9-phase audit
-    SKILL.md
-    references/                         # 8 reference files loaded on-demand
-  gc-measure-sci/                       # Quick SCI measurement
-    SKILL.md
-  gc-dev/                               # Daily dev companion
-    SKILL.md
-  gc-check-sustainability/              # Quick sustainability check
-    SKILL.md
-  gc-estimate-emissions/                # Page/sitemap emissions
-    SKILL.md
-  gc-mobile-ios/                        # iOS energy audit
-    SKILL.md
-  gc-mobile-android/                    # Android energy audit
-    SKILL.md
-  gc-verify/                            # Adversarial verification
-    SKILL.md
-```
-
-### Step 2 (optional) — Enable MCP tools
+### Optional — Enable MCP tools
 
 The MCP plugin gives your agent access to 8 sustainability measurement tools. This enhances the skills with real-time calculations but is not required — all skills include manual fallback instructions.
 
@@ -163,11 +153,30 @@ If the agent returns a gCO2eq/kWh value, the MCP server is working correctly.
 | `sci_calculate` | `/gc-setup`, `/gc-measure-sci`, `/gc-mobile-ios`, `/gc-mobile-android` | Compute SCI carbon intensity per functional unit |
 | `swd_estimate` | `/gc-setup`, `/gc-estimate-emissions` | Estimate page-level CO2 via SWD v4 model |
 | `swd_batch` | `/gc-setup`, `/gc-estimate-emissions` | Estimate emissions for multiple pages at once |
-| `check_green_hosting` | `/gc-setup`, `/gc-check-sustainability` | Check if a domain uses green hosting |
-| `grid_carbon_intensity` | `/gc-setup`, `/gc-measure-sci`, `/gc-mobile-ios`, `/gc-mobile-android` | Look up grid carbon intensity by country |
+| `check_green_hosting` | `/gc-setup`, `/gc-check-sustainability`, `/gc-estimate-emissions` | Check if a domain uses green hosting |
+| `grid_carbon_intensity` | `/gc-setup`, `/gc-measure-sci`, `/gc-mobile-ios`, `/gc-mobile-android` | Look up grid carbon intensity by country (16 countries, Ember 2022) |
 | `wsg_compliance_score` | `/gc-setup`, `/gc-check-sustainability` | Score a WSG compliance JSON file |
-| `creedengo_check` | `/gc-setup`, `/gc-check-sustainability`, `/gc-mobile-ios`, `/gc-mobile-android` | Check source files against green code rules |
+| `creedengo_check` | `/gc-setup`, `/gc-dev`, `/gc-check-sustainability`, `/gc-mobile-ios`, `/gc-mobile-android` | Check source files against green code rules |
 | `sci_compare` | `/gc-setup`, `/gc-measure-sci`, `/gc-mobile-ios`, `/gc-mobile-android` | Compare two SCI measurements |
+
+### Optional companion MCP — Website Specification
+
+[The Website Specification](https://specification.website/) publishes a **remote MCP server** that exposes its best-practice catalog as searchable lookup tools. It is a *reference* server (it answers "what's the best practice for X"), not a *measurement* server — so it complements the 8 calculation tools above rather than replacing any. The skills use the curated sustainability-adjacent subset in [`references/specification-website.md`](skills/gc-setup/references/specification-website.md); enabling the MCP is only useful if you also want interactive lookups of the full 13-area spec.
+
+To enable it, add to your project's `.claude/settings.json`:
+
+```json
+{
+  "mcpServers": {
+    "website-spec": {
+      "type": "http",
+      "url": "https://mcp.specification.website/mcp"
+    }
+  }
+}
+```
+
+> **Note:** this is a third-party network dependency. It does not feed `/gc-verify` (which only verifies measurable claims) and is not required by any skill — all green checks work without it.
 
 ## File structure
 
@@ -183,7 +192,7 @@ sustainable-code-skill-setup/
     gc-setup/                             # /gc-setup — full 9-phase audit
       SKILL.md
       evals/evals.json                    # Skill evaluation test cases
-      references/                         # 8 reference files loaded on-demand
+      references/                         # 9 reference files loaded on-demand
     gc-dev/                               # /gc-dev — daily dev companion
       SKILL.md
       evals/evals.json

@@ -34,6 +34,17 @@
         "Accounts for embodied carbon (M) of shared Kubernetes infrastructure",
         "Recommends a functional unit that spans the service boundary (e.g., per end-user transaction)"
       ]
+    },
+    {
+      "id": 4,
+      "prompt": "We call the Claude API for a summarization feature. How do I measure its carbon footprint per request?",
+      "expected_output": "Identifies this as an AI workload, applies SCI for AI Consumer score, picks a per-token/per-inference functional unit.",
+      "assertions": [
+        "Recognizes this as an AI/LLM workload and points to SCI for AI",
+        "Uses a Consumer score (inference/operation), not a Provider score",
+        "Chooses an AI-appropriate functional unit (per token or per inference/summary)",
+        "Notes that boundary and data sources must be disclosed"
+      ]
     }
   ]
 }
