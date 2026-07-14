@@ -7,7 +7,7 @@ description: >-
 license: MIT
 metadata:
   author: fullo
-  version: "1.1"
+  version: "1.2"
 ---
 
 # Check Sustainability
@@ -98,7 +98,8 @@ These complement the green checks above; they do not change the WSG score.
 
 - **Green hosting databases are incomplete**: The Green Web Foundation dataset doesn't cover all hosting providers. A "not green" result may mean "not in the database" rather than "definitely not green."
 - **WSG compliance is self-assessed**: There is no official W3C certification for WSG compliance. Any score is an estimate based on available checks, not an official rating.
-- **Page weight is not the only emissions driver**: A lightweight page served from a high-carbon grid can emit more than a heavier page from a green-hosted, edge-cached CDN. Consider the full SWD model, not just transfer size.
+- **Page weight is not the only emissions driver**: A lightweight page served from a high-carbon grid can emit more than a heavier page from a green-hosted, edge-cached CDN. Consider the full SWD model, not just transfer size. The emerging [SCI for Web](https://greensoftware.foundation/standards/sci-web/) standard (GSF × W3C, Q1 2026) formalizes this by attributing emissions across servers, networks, third parties, and end-user devices — record boundaries and data sources so results stay comparable.
+- **WSG is heading to W3C Statement status**: The Web Sustainability Guidelines reached finalised Draft Note (Dec 2025) and are targeting full W3C Statement status around Earth Day (22 Apr 2026). Guideline IDs are stable, so checks here remain valid.
 
 ## Post-report verification
 
