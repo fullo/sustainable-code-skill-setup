@@ -36,6 +36,17 @@
         "Answers each independently by re-deriving or checking measurement conditions",
         "Reports whether the 52% improvement exceeds measurement uncertainty"
       ]
+    },
+    {
+      "id": 4,
+      "prompt": "Verify this claim: 'Our AI feature emits 0.4 gCO2eq per request (SCI).'",
+      "expected_output": "Applies CoVe: checks whether the SCI for AI boundary and functional unit are declared and whether the profile is used consistently.",
+      "assertions": [
+        "Asks whether the boundary is a Provider or Consumer score",
+        "Checks that a functional unit is defined (per request/token/inference)",
+        "Flags that base SCI, SCI for AI, and SCI for Web are not interchangeable",
+        "Probes source validity and precision of the 0.4 gCO2eq figure"
+      ]
     }
   ]
 }

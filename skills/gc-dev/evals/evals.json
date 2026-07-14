@@ -33,6 +33,17 @@
         "References creedengo or equivalent green coding rules",
         "Summarizes findings per commit with severity indicators"
       ]
+    },
+    {
+      "id": 4,
+      "prompt": "I'm about to add a feature that calls an LLM to auto-tag user notes. Green review before I start?",
+      "expected_output": "Provides a sustainability-aware plan that flags the LLM call and applies SCI for AI Consumer-score thinking.",
+      "assertions": [
+        "Flags the new AI/LLM call as a carbon driver (SCI for AI Consumer score)",
+        "Suggests reducing prompt/response size, caching results, or right-sizing the model",
+        "Recommends batching or deferring non-urgent inference calls",
+        "Keeps the standard green checks (dependencies, network, assets)"
+      ]
     }
   ]
 }

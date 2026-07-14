@@ -34,6 +34,17 @@
         "Evaluates image compression and responsive image usage",
         "References relevant WSG guidelines for media optimization"
       ]
+    },
+    {
+      "id": 4,
+      "prompt": "Quick sustainability check on example.com — and are we future-proof against upcoming web carbon standards?",
+      "expected_output": "Runs the quick WSG + hosting + code check and notes SCI for Web and WSG's move toward W3C Statement status.",
+      "assertions": [
+        "Performs the WSG quick scan, green hosting, and code-pattern checks",
+        "Mentions SCI for Web (GSF x W3C, Q1 2026) as the emerging web carbon standard",
+        "Notes WSG is moving toward W3C Statement status (Earth Day 2026)",
+        "Recommends recording boundaries and data sources for comparability"
+      ]
     }
   ]
 }
