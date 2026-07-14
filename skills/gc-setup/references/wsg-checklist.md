@@ -2,6 +2,14 @@
 
 All 80 guidelines from the [W3C Web Sustainability Guidelines 1.0](https://www.w3.org/TR/web-sustainability-guidelines/).
 
+> **Status (2026):** WSG reached finalised **Draft Note** status (15 Dec) after
+> horizontal and wide W3C review. The Sustainable Web Interest Group is targeting
+> submission as a **W3C Statement** — full web-standard status — around **Earth
+> Day, 22 April 2026**. The set covers **80 guidelines**, **226 success
+> criteria**, and **142 advisory STAR techniques**. The IDs below are stable, so
+> this checklist stays valid through that transition. The same W3C group feeds
+> the GSF **SCI for Web** work — see [gsf-projects.md](gsf-projects.md#sci-for-web).
+
 For each guideline, assess: `full` | `partial` | `na` (not applicable) | `gap` (not addressed).
 
 ## Category 1: User Experience Design (2.1-2.21)

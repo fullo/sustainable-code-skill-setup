@@ -197,7 +197,7 @@ Measure the carbon intensity of key operations:
 2. ...
 
 ### Methodology and sources
-- Formula: SCI = ((E x I) + M) / R — [GSF SCI Specification v1.0](https://sci-guide.greensoftware.foundation/) (ISO 21031:2024)
+- Formula: SCI = ((E x I) + M) / R — [GSF SCI Specification](https://sci-guide.greensoftware.foundation/) (ISO/IEC 21031:2024)
 - Code rules: [Creedengo iOS](https://github.com/green-code-initiative/creedengo-ios) — green-code-initiative
 - Energy profiling: Xcode Instruments Energy Log / MetricKit
 - Device power: [value] W — Apple Product Environmental Report [year]
