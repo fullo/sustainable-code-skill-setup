@@ -8,7 +8,7 @@ description: >-
 license: MIT
 metadata:
   author: fullo
-  version: "1.0"
+  version: "1.1"
 ---
 
 # Green Coding Dev Companion
@@ -103,6 +103,7 @@ When invoked with `/gc-dev feature [description]`, provide a sustainability-awar
 - Does it add new dependencies? Are they necessary?
 - Does it add new network requests? Can they be batched or deferred?
 - Does it affect the critical rendering path?
+- **Does it call an AI/LLM model?** If so, plan for a **SCI for AI** Consumer score (carbon per token/inference/workflow): can prompts be shorter, responses cached, a smaller model used, or calls batched? See [gsf-projects.md](../gc-setup/references/gsf-projects.md#sci-for-ai).
 
 ### 2. Suggest green implementation patterns
 
@@ -159,6 +160,7 @@ git diff main...HEAD
 - New dependencies added? Justified?
 - Bundle size impact?
 - New network requests or API calls?
+- New AI/LLM calls? Prompt/response size minimized, cached, right-sized model? (SCI for AI Consumer score)
 - Efficient data fetching? (pagination, filtering on server)
 - Proper caching?
 - Images and assets optimized?

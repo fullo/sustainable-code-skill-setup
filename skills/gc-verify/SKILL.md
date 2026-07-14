@@ -9,7 +9,7 @@ description: >-
 license: MIT
 metadata:
   author: fullo
-  version: "2.0"
+  version: "2.1"
 ---
 
 # Green Coding — Adversarial Verification
@@ -180,6 +180,8 @@ checklist to ensure full coverage:
 - Full system boundary? (frontend, backend, third-party, CDN, DNS, CI/CD)
 - WSG: how many of 80 guidelines actually checked vs marked "na"?
 - SCI: top energy consumers all covered?
+- SCI for AI: is the boundary declared — **Provider** (training) vs **Consumer** (inference)? Functional unit stated (per token/image/inference/workflow)?
+- SCI for Web: are third parties (analytics, ads, CDNs, auth) in scope, with boundaries and data sources disclosed?
 - Mobile: foreground AND background?
 - Rebound effects considered?
 
@@ -187,6 +189,7 @@ checklist to ensure full coverage:
 
 - Same carbon intensity across all calculations?
 - Same functional unit in all SCI comparisons?
+- Same SCI profile compared like-for-like? (base SCI vs SCI for AI vs SCI for Web are not interchangeable)
 - Same device power for comparable operations?
 - Same data vintage for reference data?
 - Consistent severity criteria?
@@ -295,7 +298,7 @@ findings:
   bias propagation from the original report
 - Dimensions: 8 adversarial dimensions (sources, assumptions, precision,
   coverage, consistency, greenwashing, reproducibility, feasibility)
-- Reference standards: GSF SCI Spec (ISO 21031:2024), W3C WSG 1.0, SWD v4
+- Reference standards: GSF SCI Spec (ISO/IEC 21031:2024) incl. SCI for AI and SCI for Web profiles, W3C WSG 1.0, SWD v4
 - This verification does not constitute certification or endorsement
 ```
 

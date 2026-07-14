@@ -2,6 +2,12 @@
 
 Reference material for implementing Software Carbon Intensity measurement.
 
+> **SCI is now ISO/IEC 21031:2024.** The parent standard has two domain-specific
+> profiles built on the same formula: **SCI for AI** (ratified Dec 2025) and
+> **SCI for Web** (in development, Q1 2026). See
+> [gsf-projects.md](gsf-projects.md) for the full ecosystem map, scoring rules,
+> and the Carmen / Kepler cloud measurement engines.
+
 ## SCI Formula
 
 ```
@@ -107,6 +113,31 @@ For cloud deployments, consider:
 - [Carbon Aware SDK](https://github.com/Green-Software-Foundation/carbon-aware-sdk) for region-aware scheduling
 - Cloud provider carbon APIs (AWS Customer Carbon Footprint Tool, Google Carbon Footprint, Azure Emissions Impact Dashboard)
 
+### Kubernetes & cloud workloads (Carmen, Kepler)
+
+For per-workload measurement inside a cluster, use one of the two GSF/CNCF engines:
+
+- **[Carmen](https://github.com/Green-Software-Foundation/if-carmen)** (GSF, since
+  Jan 2026) — computes **carbon** (operational + embodied) for cloud
+  infrastructure and Kubernetes pods, built on the Impact Framework and reading
+  Prometheus / Kube State Metrics. Produces auditable manifests. Use when you
+  need carbon at team/app granularity.
+- **[Kepler](https://sustainable-computing.io/)** (CNCF Sandbox) — exports
+  container/pod/node **energy** to Prometheus. **v0.10 (2026) dropped eBPF** in
+  favor of `/proc` and `/sys`. Pair its energy output with grid carbon intensity
+  to get emissions.
+
+See [gsf-projects.md](gsf-projects.md#measurement-engines-for-cloud--kubernetes)
+for a fuller comparison.
+
+### AI workloads (SCI for AI)
+
+If the operation trains or runs an AI/ML model, use **SCI for AI** (`SCI = C / R`).
+Report whether it is a **Provider** score (training/development) or a **Consumer**
+score (inference/operation), and pick a functional unit that fits the model type
+(per token, per image, per inference, per workflow). See
+[gsf-projects.md](gsf-projects.md#sci-for-ai).
+
 ### CLI Tools
 
 Use `hyperfine` for reliable wall-clock benchmarks:
@@ -203,7 +234,8 @@ pick the lowest-carbon time window within your SLO.
 
 ## References
 
-- [Green Software Foundation SCI Specification](https://sci-guide.greensoftware.foundation/)
+- [Green Software Foundation SCI Specification](https://sci-guide.greensoftware.foundation/) (ISO/IEC 21031:2024)
+- [GSF ecosystem & standards map — SCI for AI, SCI for Web, Carmen, Kepler](gsf-projects.md)
 - [Green Software Patterns](https://patterns.greensoftware.foundation/)
 - [SCI Profiler (TypeScript)](https://github.com/fullo/sci-profiler)
 - [Cloud Carbon Footprint](https://www.cloudcarbonfootprint.org/)

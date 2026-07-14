@@ -1,6 +1,6 @@
 # Green Coding Skills — Agent Skills + MCP Tools
 
-[![Skill Version](https://img.shields.io/badge/skill-v3.1-blue)](skills/gc-setup/SKILL.md)
+[![Skill Version](https://img.shields.io/badge/skill-v3.2-blue)](skills/gc-setup/SKILL.md)
 [![MCP Tools](https://img.shields.io/badge/MCP_tools-8-green)](mcp-plugin/)
 [![CI](https://github.com/fullo/sustainable-code-skill-setup/actions/workflows/ci.yml/badge.svg)](https://github.com/fullo/sustainable-code-skill-setup/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
@@ -39,11 +39,14 @@ When activated, the skill guides your AI agent through a 9-phase workflow:
 
 | Area | Standard / Tool |
 |------|----------------|
-| Carbon measurement | [SCI (Software Carbon Intensity)](https://sci-guide.greensoftware.foundation/) |
+| Carbon measurement | [SCI (Software Carbon Intensity)](https://sci-guide.greensoftware.foundation/) — now [ISO/IEC 21031:2024](https://sci.greensoftware.foundation/) |
+| AI carbon | [SCI for AI](https://greensoftware.foundation/standards/sci-ai/) — ratified Dec 2025 (Provider vs Consumer scores) |
+| Web carbon | [SCI for Web](https://greensoftware.foundation/standards/sci-web/) — GSF × W3C, in development (Q1 2026) |
 | SCI profiling (JS/TS) | [SCI Profiler](https://github.com/fullo/sci-profiler) — zero-dependency TypeScript library |
 | SCI profiling (PHP) | [SCI Profiler PHP](https://github.com/fullo/sci-profiler-php) — zero-code-changes, framework-agnostic |
+| Cloud / K8s carbon | [Carmen](https://github.com/Green-Software-Foundation/if-carmen) (carbon, Impact Framework) · [Kepler](https://sustainable-computing.io/) (energy, CNCF) |
 | Page emissions | [Sustainable Web Design (SWD) v4](https://sustainablewebdesign.org/estimating-digital-emissions/) model |
-| Web sustainability | [W3C WSG 1.0](https://www.w3.org/TR/web-sustainability-guidelines/) (80 guidelines) |
+| Web sustainability | [W3C WSG](https://www.w3.org/TR/web-sustainability-guidelines/) (80 guidelines, → W3C Statement by Earth Day 2026) |
 | Accessibility | [WCAG 2.1 AA](https://www.w3.org/TR/WCAG21/) via [Lighthouse CI](https://github.com/GoogleChrome/lighthouse-ci) |
 | Performance | Lighthouse performance scores, bundle budgets |
 | Green patterns | [Green Software Foundation](https://patterns.greensoftware.foundation/) patterns catalog |

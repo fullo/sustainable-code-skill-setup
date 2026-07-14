@@ -8,7 +8,7 @@ description: >-
 license: MIT
 metadata:
   author: fullo
-  version: "1.0"
+  version: "1.1"
 ---
 
 # Green Coding — Android
@@ -232,7 +232,7 @@ For more precise measurement, use Android Studio Power Profiler data to derive a
 2. ...
 
 ### Methodology and sources
-- Formula: SCI = ((E x I) + M) / R — [GSF SCI Specification v1.0](https://sci-guide.greensoftware.foundation/) (ISO 21031:2024)
+- Formula: SCI = ((E x I) + M) / R — [GSF SCI Specification](https://sci-guide.greensoftware.foundation/) (ISO/IEC 21031:2024)
 - Code rules: [Creedengo](https://github.com/green-code-initiative/creedengo-rules-specifications) Android rules — green-code-initiative
 - Energy profiling: Android Studio Power Profiler / Battery Historian / Perfetto
 - Device power: [value] W — manufacturer environmental report [year]
